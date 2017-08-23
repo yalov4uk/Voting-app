@@ -11,6 +11,7 @@
     <modules>
         <module>bean</module>
         <module>dao</module>
+        <module>core</module>
     </modules>
 
     <dependencyManagement>
@@ -25,6 +26,12 @@
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-jpa</artifactId>
                 <version>${spring.data.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring.boot.version}</version>
             </dependency>
 
 
@@ -49,6 +56,8 @@
 
         <jpa.version>1.0.1.Final</jpa.version>
         <spring.data.version>1.11.6.RELEASE</spring.data.version>
+        <spring.boot.version>1.5.6.RELEASE</spring.boot.version>
+
         <project.version>1.0-SNAPSHOT</project.version>
     </properties>
 
