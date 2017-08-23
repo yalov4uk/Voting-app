@@ -14,13 +14,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>com.yalovchuk</groupId>
-            <artifactId>dao</artifactId>
+            <artifactId>web</artifactId>
         </dependency>
     </dependencies>
 

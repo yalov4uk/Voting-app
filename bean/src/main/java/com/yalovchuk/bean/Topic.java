@@ -3,6 +3,7 @@ package com.yalovchuk.bean;
 import com.yalovchuk.bean.base.Bean;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -10,7 +11,7 @@ import java.util.Set;
 public class Topic extends Bean {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic",fetch = FetchType.LAZY)
-    private Set<Voting> votings;
+    private Set<Voting> votings = new HashSet<>();
 
     protected Topic() {
         super();
