@@ -1,6 +1,6 @@
-package com.yalov4uk.bean;
+package com.yalovchuk.bean;
 
-import com.yalov4uk.bean.base.Bean;
+import com.yalovchuk.bean.base.Bean;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -20,7 +20,7 @@ public class Voting extends Bean {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "voting", fetch = FetchType.LAZY)
     private Set<Item> items;
 
-    public Voting() {
+    protected Voting() {
         super();
     }
 

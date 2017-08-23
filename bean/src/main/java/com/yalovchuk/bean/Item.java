@@ -1,6 +1,6 @@
-package com.yalov4uk.bean;
+package com.yalovchuk.bean;
 
-import com.yalov4uk.bean.base.Bean;
+import com.yalovchuk.bean.base.Bean;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -16,7 +16,7 @@ public class Item extends Bean {
     @JoinColumn(name = "voting_id", nullable = false)
     private Voting voting;
 
-    public Item() {
+    protected Item() {
         super();
     }
 

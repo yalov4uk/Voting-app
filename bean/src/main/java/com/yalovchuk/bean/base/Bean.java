@@ -1,4 +1,4 @@
-package com.yalov4uk.bean.base;
+package com.yalovchuk.bean.base;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,7 +15,7 @@ public abstract class Bean implements Serializable {
     @Column(name = "name", length = 50, nullable = false)
     private String name;
 
-    public Bean() {
+    protected Bean() {
     }
 
     public Bean(String name) {

@@ -1,6 +1,6 @@
-package com.yalov4uk.bean;
+package com.yalovchuk.bean;
 
-import com.yalov4uk.bean.base.Bean;
+import com.yalovchuk.bean.base.Bean;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -12,7 +12,7 @@ public class Topic extends Bean {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic",fetch = FetchType.LAZY)
     private Set<Voting> votings;
 
-    public Topic() {
+    protected Topic() {
         super();
     }
 
