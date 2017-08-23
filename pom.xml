@@ -6,7 +6,28 @@
 
     <groupId>com.yalov4uk</groupId>
     <artifactId>VotingApp</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>bean</module>
+    </modules>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.hibernate.javax.persistence</groupId>
+                <artifactId>hibernate-jpa-2.0-api</artifactId>
+                <version>${jpa.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <jpa.version>1.0.1.Final</jpa.version>
+        <project.version>1.0-SNAPSHOT</project.version>
+    </properties>
 
 </project>
