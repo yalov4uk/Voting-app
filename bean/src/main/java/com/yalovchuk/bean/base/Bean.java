@@ -5,12 +5,12 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @MappedSuperclass
-public abstract class Bean implements Serializable {
+public abstract class Bean<K extends Number> implements Serializable {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private K id;
 
     @Column(name = "name", length = 50, nullable = false)
     private String name;
@@ -22,11 +22,11 @@ public abstract class Bean implements Serializable {
         this.name = name;
     }
 
-    public Long getId() {
+    public K getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(K id) {
         this.id = id;
     }
 

@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "topic")
-public class Topic extends Bean {
+public class Topic extends Bean<Long> {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic", fetch = FetchType.LAZY)
     private Set<Voting> votings = new HashSet<>();

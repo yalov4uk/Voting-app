@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "voting")
-public class Voting extends Bean {
+public class Voting extends Bean<Long> {
 
     @Column(name = "enable", nullable = false)
     private Boolean enable;

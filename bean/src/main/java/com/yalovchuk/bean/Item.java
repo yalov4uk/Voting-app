@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "item")
-public class Item extends Bean {
+public class Item extends Bean<Long> {
 
     @Column(name = "score", nullable = false)
     private Integer score;

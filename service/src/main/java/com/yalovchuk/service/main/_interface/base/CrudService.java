@@ -1,14 +1,17 @@
-package com.yalovchuk.service._interface.base;
+package com.yalovchuk.service.main._interface.base;
+
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface CrudService<T, K> {
 
     T create(T bean);
 
     T read(K id);
 
-    T update(T bean);
+    T update(K id, T bean);
 
     void delete(K id);
 

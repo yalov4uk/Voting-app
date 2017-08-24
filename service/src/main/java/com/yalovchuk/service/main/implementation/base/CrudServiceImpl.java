@@ -1,12 +1,12 @@
-package com.yalovchuk.service.implementation.base;
+package com.yalovchuk.service.main.implementation.base;
 
-import com.yalovchuk.service._interface.base.CrudService;
+import com.yalovchuk.bean.base.Bean;
+import com.yalovchuk.service.main._interface.base.CrudService;
 import org.springframework.data.repository.CrudRepository;
 
-import java.io.Serializable;
 import java.util.List;
 
-public abstract class CrudServiceImpl<T, K extends Serializable> implements CrudService<T, K> {
+public abstract class CrudServiceImpl<T extends Bean, K extends Number> implements CrudService<T, K> {
 
     protected abstract CrudRepository<T, K> getDao();
 
@@ -20,9 +20,14 @@ public abstract class CrudServiceImpl<T, K extends Serializable> implements Crud
         return getDao().findOne(id);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public T update(T bean) {
-        return getDao().save(bean);
+    public T update(K id, T bean) {
+        if (getDao().exists(id)) {
+            bean.setId(id);
+            return getDao().save(bean);
+        }
+        return null;
     }
 
     @Override
