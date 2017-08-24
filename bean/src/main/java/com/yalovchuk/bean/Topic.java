@@ -10,7 +10,7 @@ import java.util.Set;
 @Table(name = "topic")
 public class Topic extends Bean {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic",fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic", fetch = FetchType.LAZY)
     private Set<Voting> votings = new HashSet<>();
 
     protected Topic() {
