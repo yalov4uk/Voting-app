@@ -1,17 +1,26 @@
 package com.yalovchuk.web.controller;
 
 import com.yalovchuk.bean.Item;
-import com.yalovchuk.service.crud._interface.ItemService;
-import com.yalovchuk.service.crud._interface.base.CrudService;
-import com.yalovchuk.web.controller.base.CrudController;
+import com.yalovchuk.bean.Voting;
+import com.yalovchuk.service.main._interface.ItemService;
+import com.yalovchuk.service.main._interface.base.CrudService;
+import com.yalovchuk.web.controller.base.RudController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Deprecated
+import java.util.List;
+
 @RestController
-@RequestMapping(value = "/items")
-public class ItemController extends CrudController<Item, Long> {
+@RequestMapping(
+        value = "topics/{topicId}/votings/{votingId}/items",
+        consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE
+)
+public class ItemController extends RudController<Item, Long> {
 
     @Autowired
     private ItemService itemService;
@@ -19,5 +28,21 @@ public class ItemController extends CrudController<Item, Long> {
     @Override
     protected CrudService<Item, Long> getService() {
         return itemService;
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public HttpEntity<Item> createVotingByTopicId(@PathVariable Long votingId, @RequestBody Item item) {
+        return new ResponseEntity<>(itemService.createByVotingId(votingId, item), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.DELETE)
+    public HttpStatus deleteAllVotingsByTopicId(@PathVariable Long votingId) {
+        itemService.deleteAllByVotingId(votingId);
+        return HttpStatus.NO_CONTENT;
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public HttpEntity<List<Item>> getAllVotingsByTopicId(@PathVariable Long votingId) {
+        return new ResponseEntity<>(itemService.getAllByVotingId(votingId), HttpStatus.OK);
     }
 }

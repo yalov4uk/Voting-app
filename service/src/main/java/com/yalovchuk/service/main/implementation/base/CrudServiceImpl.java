@@ -1,7 +1,7 @@
-package com.yalovchuk.service.crud.implementation.base;
+package com.yalovchuk.service.main.implementation.base;
 
 import com.yalovchuk.bean.base.Bean;
-import com.yalovchuk.service.crud._interface.base.CrudService;
+import com.yalovchuk.service.main._interface.base.CrudService;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

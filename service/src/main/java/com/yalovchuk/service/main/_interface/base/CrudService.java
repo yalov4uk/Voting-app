@@ -1,4 +1,4 @@
-package com.yalovchuk.service.crud._interface.base;
+package com.yalovchuk.service.main._interface.base;
 
 import org.springframework.stereotype.Service;
 
