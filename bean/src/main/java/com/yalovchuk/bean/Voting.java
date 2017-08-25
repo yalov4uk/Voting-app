@@ -1,6 +1,7 @@
 package com.yalovchuk.bean;
 
 import com.yalovchuk.bean.base.Bean;
+import com.yalovchuk.bean.base.NamedBean;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -9,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "voting")
-public class Voting extends Bean<Long> {
+public class Voting extends NamedBean<Long> {
 
     @Column(name = "enable", nullable = false)
     private Boolean enable;

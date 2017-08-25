@@ -14,6 +14,7 @@
         <module>core</module>
         <module>web</module>
         <module>service</module>
+        <module>resource</module>
     </modules>
 
     <dependencyManagement>
@@ -61,11 +62,16 @@
                 <version>${commons-codec.version}</version>
             </dependency>
 
-
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
                 <version>${spring.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.hateoas</groupId>
+                <artifactId>spring-hateoas</artifactId>
+                <version>${spring.hateoas.version}</version>
             </dependency>
 
 
@@ -93,6 +99,12 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.yalovchuk</groupId>
+                <artifactId>resource</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -108,6 +120,7 @@
         <mysql.connector.version>8.0.7-dmr</mysql.connector.version>
         <commons-dbcp.version>1.4</commons-dbcp.version>
         <commons-codec.version>1.10</commons-codec.version>
+        <spring.hateoas.version>0.23.0.RELEASE</spring.hateoas.version>
 
         <project.version>1.0-SNAPSHOT</project.version>
     </properties>

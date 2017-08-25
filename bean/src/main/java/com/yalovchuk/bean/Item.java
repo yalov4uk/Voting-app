@@ -1,13 +1,14 @@
 package com.yalovchuk.bean;
 
 import com.yalovchuk.bean.base.Bean;
+import com.yalovchuk.bean.base.NamedBean;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "item")
-public class Item extends Bean<Long> {
+public class Item extends NamedBean<Long> {
 
     @Column(name = "score", nullable = false)
     private Integer score;

@@ -1,8 +1,10 @@
 package com.yalovchuk.web.controller.base;
 
-import com.yalovchuk.service.main._interface.base.CrudService;
-import com.yalovchuk.service.utils._interface.Encryptor;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.yalovchuk.bean.Voting;
+import com.yalovchuk.service.crud._interface.base.CrudService;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,33 +14,31 @@ import java.util.List;
 
 public abstract class CrudController<T, K> {
 
-    @Autowired
-    protected Encryptor encryptor;
-
     protected abstract CrudService<T, K> getService();
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public T create(@RequestBody T bean) {
-        return getService().create(bean);
+    public HttpEntity<T> create(@RequestBody T bean) {
+        return new ResponseEntity<>(getService().create(bean), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public T read(@PathVariable K id) {
-        return getService().read(id);
+    public HttpEntity<T> read(@PathVariable K id) {
+        return new ResponseEntity<>(getService().read(id), HttpStatus.FOUND);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public T update(@PathVariable K id, @RequestBody T bean) {
-        return getService().update(id, bean);
+    public HttpEntity<T> update(@PathVariable K id, @RequestBody T bean) {
+        return new ResponseEntity<>(getService().update(id, bean), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable K id) {
+    public HttpStatus delete(@PathVariable K id) {
         getService().delete(id);
+        return HttpStatus.NO_CONTENT;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public List<T> getAll() {
-        return getService().getAll();
+    public HttpEntity<List<T>> getAll() {
+        return new ResponseEntity<>(getService().getAll(), HttpStatus.FOUND);
     }
 }
