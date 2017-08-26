@@ -1,6 +1,5 @@
 package com.yalovchuk.dto;
 
-import com.yalovchuk.bean.Topic;
 import com.yalovchuk.bean.Voting;
 import com.yalovchuk.dto.base.NamedBeanDto;
 

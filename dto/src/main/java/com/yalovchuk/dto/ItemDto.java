@@ -1,7 +1,6 @@
 package com.yalovchuk.dto;
 
 import com.yalovchuk.bean.Item;
-import com.yalovchuk.bean.Voting;
 import com.yalovchuk.dto.base.NamedBeanDto;
 
 public class ItemDto extends NamedBeanDto<Item, Long> {

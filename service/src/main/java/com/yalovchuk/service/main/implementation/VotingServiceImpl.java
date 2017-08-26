@@ -3,7 +3,6 @@ package com.yalovchuk.service.main.implementation;
 import com.yalovchuk.bean.Voting;
 import com.yalovchuk.dao.TopicDao;
 import com.yalovchuk.dao.VotingDao;
-import com.yalovchuk.service.main._interface.TopicService;
 import com.yalovchuk.service.main._interface.VotingService;
 import com.yalovchuk.service.main.implementation.base.CrudServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,5 @@
 package com.yalovchuk.resource.base;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
-
 import com.yalovchuk.bean.base.Bean;
 import org.springframework.hateoas.ResourceSupport;
 

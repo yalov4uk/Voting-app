@@ -1,7 +1,6 @@
 package com.yalovchuk.service.main._interface.base;
 
 import com.yalovchuk.bean.base.Bean;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

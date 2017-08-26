@@ -1,11 +1,9 @@
 package com.yalovchuk.service.main.implementation;
 
 import com.yalovchuk.bean.Item;
-import com.yalovchuk.bean.Voting;
 import com.yalovchuk.dao.ItemDao;
 import com.yalovchuk.dao.VotingDao;
 import com.yalovchuk.service.main._interface.ItemService;
-import com.yalovchuk.service.main._interface.VotingService;
 import com.yalovchuk.service.main.implementation.base.CrudServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;

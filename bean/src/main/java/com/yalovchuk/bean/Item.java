@@ -1,6 +1,5 @@
 package com.yalovchuk.bean;
 
-import com.yalovchuk.bean.base.Bean;
 import com.yalovchuk.bean.base.NamedBean;
 
 import javax.persistence.*;
