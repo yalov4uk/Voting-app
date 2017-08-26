@@ -1,14 +1,12 @@
 package com.yalovchuk.service.complex.implementation;
 
 import com.yalovchuk.bean.Item;
-import com.yalovchuk.dao.ItemDao;
 import com.yalovchuk.dto.ItemDto;
 import com.yalovchuk.resource.ItemResource;
 import com.yalovchuk.service.complex._interface.ItemComplexService;
 import com.yalovchuk.service.main.implementation.ItemServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,12 +20,14 @@ public class ItemComplexServiceImpl extends ItemServiceImpl implements ItemCompl
 
     @Override
     public Item dtoToBean(ItemDto beanDto) {
-        return null;
+        Item item = modelMapper.map(beanDto, Item.class);
+        if (beanDto.getVotingId() != null) item.setVoting(votingDao.findOne(beanDto.getVotingId()));
+        return item;
     }
 
     @Override
     public ItemResource beanToResource(Item bean) {
-        return null;
+        return modelMapper.map(bean, ItemResource.class);
     }
 
     @Override
