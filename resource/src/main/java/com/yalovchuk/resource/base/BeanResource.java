@@ -5,15 +5,15 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 import com.yalovchuk.bean.base.Bean;
 import org.springframework.hateoas.ResourceSupport;
 
-public abstract class BaseResource<T extends Bean<K>, K extends Number> extends ResourceSupport {
+public abstract class BeanResource<T extends Bean<K>, K extends Number> extends ResourceSupport {
 
     private K pk;
 
-    protected BaseResource(K pk) {
+    protected BeanResource(K pk) {
         this.pk = pk;
     }
 
-    protected BaseResource(T bean) {
+    protected BeanResource(T bean) {
         this.pk = bean.getId();
     }
 

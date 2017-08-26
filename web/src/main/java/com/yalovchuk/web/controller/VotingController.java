@@ -3,8 +3,9 @@ package com.yalovchuk.web.controller;
 import com.yalovchuk.bean.Voting;
 import com.yalovchuk.service.main._interface.VotingService;
 import com.yalovchuk.service.main._interface.base.CrudService;
-import com.yalovchuk.web.controller.base.CrudController;
-import com.yalovchuk.web.controller.base.RudController;
+import com.yalovchuk.web.controller.base.mixin.DeleteController;
+import com.yalovchuk.web.controller.base.mixin.ReadController;
+import com.yalovchuk.web.controller.base.mixin.UpdateController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -20,13 +21,16 @@ import java.util.List;
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE
 )
-public class VotingController extends RudController<Voting, Long> {
+public class VotingController implements
+        ReadController<Voting, Long>,
+        UpdateController<Voting, Long>,
+        DeleteController<Voting, Long> {
 
     @Autowired
     private VotingService votingService;
 
     @Override
-    protected CrudService<Voting, Long> getService() {
+    public CrudService<Voting, Long> getService() {
         return votingService;
     }
 

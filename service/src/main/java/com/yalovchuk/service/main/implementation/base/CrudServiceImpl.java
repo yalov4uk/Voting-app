@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public abstract class CrudServiceImpl<T extends Bean, K extends Number> implements CrudService<T, K> {
+public abstract class CrudServiceImpl<T extends Bean<K>, K extends Number> implements CrudService<T, K> {
 
     protected abstract CrudRepository<T, K> getDao();
 
@@ -20,7 +20,6 @@ public abstract class CrudServiceImpl<T extends Bean, K extends Number> implemen
         return getDao().findOne(id);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public T update(K id, T bean) {
         if (getDao().exists(id)) {

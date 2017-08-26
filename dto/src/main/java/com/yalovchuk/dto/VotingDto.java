@@ -7,18 +7,18 @@ import com.yalovchuk.dto.base.NamedBeanDto;
 public class VotingDto extends NamedBeanDto<Voting, Long> {
 
     private Boolean enable;
-    private Topic topic;
+    private TopicDto topic;
 
-    public VotingDto(Long id, String name, Boolean enable, Topic topic) {
+    public VotingDto(Long id, String name, Boolean enable, TopicDto topic) {
         super(id, name);
         this.enable = enable;
         this.topic = topic;
     }
 
-    public VotingDto(Voting voting) {
+    public VotingDto(Voting voting, TopicDto topic) {
         super(voting);
         this.enable = voting.getEnable();
-        this.topic = voting.getTopic();
+        this.topic = topic;
     }
 
     public Boolean getEnable() {
@@ -29,11 +29,11 @@ public class VotingDto extends NamedBeanDto<Voting, Long> {
         this.enable = enable;
     }
 
-    public Topic getTopic() {
+    public TopicDto getTopic() {
         return topic;
     }
 
-    public void setTopic(Topic topic) {
+    public void setTopic(TopicDto topic) {
         this.topic = topic;
     }
 }

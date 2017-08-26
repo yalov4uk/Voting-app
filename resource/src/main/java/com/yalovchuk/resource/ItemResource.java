@@ -1,31 +1,30 @@
 package com.yalovchuk.resource;
 
 import com.yalovchuk.bean.Item;
-import com.yalovchuk.bean.Voting;
-import com.yalovchuk.resource.base.BaseNamedResource;
+import com.yalovchuk.resource.base.NamedBeanResource;
 
-public class ItemResource extends BaseNamedResource<Item, Long> {
+public class ItemResource extends NamedBeanResource<Item, Long> {
 
     private Integer score;
-    private Voting voting;
+    private VotingResource voting;
 
-    public ItemResource(Long pk, String name, Integer score, Voting voting) {
+    public ItemResource(Long pk, String name, Integer score, VotingResource voting) {
         super(pk, name);
         this.score = score;
         this.voting = voting;
     }
 
-    public ItemResource(Item item) {
+    public ItemResource(Item item, VotingResource voting) {
         super(item);
         this.score = item.getScore();
-        this.voting = item.getVoting();
+        this.voting = voting;
     }
 
     public Integer getScore() {
         return score;
     }
 
-    public Voting getVoting() {
+    public VotingResource getVoting() {
         return voting;
     }
 }

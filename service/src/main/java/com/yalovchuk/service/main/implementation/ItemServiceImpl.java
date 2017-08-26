@@ -3,6 +3,7 @@ package com.yalovchuk.service.main.implementation;
 import com.yalovchuk.bean.Item;
 import com.yalovchuk.bean.Voting;
 import com.yalovchuk.dao.ItemDao;
+import com.yalovchuk.dao.VotingDao;
 import com.yalovchuk.service.main._interface.ItemService;
 import com.yalovchuk.service.main._interface.VotingService;
 import com.yalovchuk.service.main.implementation.base.CrudServiceImpl;
@@ -17,9 +18,8 @@ public class ItemServiceImpl extends CrudServiceImpl<Item, Long> implements Item
 
     @Autowired
     protected ItemDao itemDao;
-
     @Autowired
-    protected VotingService votingService;
+    protected VotingDao votingDao;
 
     protected CrudRepository<Item, Long> getDao() {
         return itemDao;
@@ -27,7 +27,7 @@ public class ItemServiceImpl extends CrudServiceImpl<Item, Long> implements Item
 
     @Override
     public Item createByVotingId(Long votingId, Item item) {
-        item.setVoting(votingService.read(votingId));
+        item.setVoting(votingDao.findOne(votingId));
         return create(item);
     }
 

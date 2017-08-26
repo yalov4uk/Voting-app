@@ -1,6 +1,7 @@
 package com.yalovchuk.service.main.implementation;
 
 import com.yalovchuk.bean.Voting;
+import com.yalovchuk.dao.TopicDao;
 import com.yalovchuk.dao.VotingDao;
 import com.yalovchuk.service.main._interface.TopicService;
 import com.yalovchuk.service.main._interface.VotingService;
@@ -16,9 +17,8 @@ public class VotingServiceImpl extends CrudServiceImpl<Voting, Long> implements 
 
     @Autowired
     protected VotingDao votingDao;
-
     @Autowired
-    protected TopicService topicService;
+    protected TopicDao topicDao;
 
     protected CrudRepository<Voting, Long> getDao() {
         return votingDao;
@@ -26,7 +26,7 @@ public class VotingServiceImpl extends CrudServiceImpl<Voting, Long> implements 
 
     @Override
     public Voting createByTopicId(Long topicId, Voting voting) {
-        voting.setTopic(topicService.read(topicId));
+        voting.setTopic(topicDao.findOne(topicId));
         return create(voting);
     }
 

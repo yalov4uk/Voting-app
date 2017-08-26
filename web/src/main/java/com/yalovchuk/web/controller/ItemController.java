@@ -1,10 +1,11 @@
 package com.yalovchuk.web.controller;
 
 import com.yalovchuk.bean.Item;
-import com.yalovchuk.bean.Voting;
 import com.yalovchuk.service.main._interface.ItemService;
 import com.yalovchuk.service.main._interface.base.CrudService;
-import com.yalovchuk.web.controller.base.RudController;
+import com.yalovchuk.web.controller.base.mixin.DeleteController;
+import com.yalovchuk.web.controller.base.mixin.ReadController;
+import com.yalovchuk.web.controller.base.mixin.UpdateController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -20,13 +21,16 @@ import java.util.List;
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE
 )
-public class ItemController extends RudController<Item, Long> {
+public class ItemController implements
+        ReadController<Item, Long>,
+        UpdateController<Item, Long>,
+        DeleteController<Item, Long> {
 
     @Autowired
     private ItemService itemService;
 
     @Override
-    protected CrudService<Item, Long> getService() {
+    public CrudService<Item, Long> getService() {
         return itemService;
     }
 

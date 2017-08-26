@@ -1,32 +1,30 @@
 package com.yalovchuk.resource;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import com.yalovchuk.bean.Topic;
 import com.yalovchuk.bean.Voting;
-import com.yalovchuk.resource.base.BaseNamedResource;
+import com.yalovchuk.resource.base.NamedBeanResource;
 
-public class VotingResource extends BaseNamedResource<Voting, Long> {
+public class VotingResource extends NamedBeanResource<Voting, Long> {
 
     private Boolean enable;
-    private Topic topic;
+    private TopicResource topic;
 
-    public VotingResource(Long pk, String name, Boolean enable, Topic topic) {
+    public VotingResource(Long pk, String name, Boolean enable, TopicResource topic) {
         super(pk, name);
         this.enable = enable;
         this.topic = topic;
     }
 
-    public VotingResource(Voting voting) {
+    public VotingResource(Voting voting, TopicResource topic) {
         super(voting);
         this.enable = voting.getEnable();
-        this.topic = voting.getTopic();
+        this.topic = topic;
     }
 
     public Boolean getEnable() {
         return enable;
     }
 
-    public Topic getTopic() {
+    public TopicResource getTopic() {
         return topic;
     }
 }

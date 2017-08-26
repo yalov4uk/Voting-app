@@ -27,6 +27,16 @@
             <groupId>com.yalovchuk</groupId>
             <artifactId>dao</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.yalovchuk</groupId>
+            <artifactId>dto</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yalovchuk</groupId>
+            <artifactId>resource</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
