@@ -6,18 +6,18 @@ import com.yalovchuk.dto.base.NamedBeanDto;
 public class ItemDto extends NamedBeanDto<Item, Long> {
 
     private Integer score;
-    private VotingDto voting;
+    private Long votingId;
 
-    public ItemDto(Long id, String name, Integer score, VotingDto voting) {
+    public ItemDto(Long id, String name, Integer score, Long votingId) {
         super(id, name);
         this.score = score;
-        this.voting = voting;
+        this.votingId = votingId;
     }
 
-    public ItemDto(Item item, VotingDto voting) {
+    public ItemDto(Item item) {
         super(item);
         this.score = item.getScore();
-        this.voting = voting;
+        this.votingId = item.getVoting().getId();
     }
 
     public Integer getScore() {
@@ -28,11 +28,11 @@ public class ItemDto extends NamedBeanDto<Item, Long> {
         this.score = score;
     }
 
-    public VotingDto getVoting() {
-        return voting;
+    public Long getVotingId() {
+        return votingId;
     }
 
-    public void setVoting(VotingDto voting) {
-        this.voting = voting;
+    public void setVotingId(Long votingId) {
+        this.votingId = votingId;
     }
 }

@@ -17,4 +17,9 @@ public class TopicServiceImpl extends CrudServiceImpl<Topic, Long> implements To
     protected CrudRepository<Topic, Long> getDao() {
         return topicDao;
     }
+
+    @Override
+    protected void loadLists(Topic oldBean, Topic newBean) {
+        newBean.setVotings(oldBean.getVotings());
+    }
 }

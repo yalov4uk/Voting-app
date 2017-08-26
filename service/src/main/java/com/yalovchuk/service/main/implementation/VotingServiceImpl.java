@@ -24,6 +24,11 @@ public class VotingServiceImpl extends CrudServiceImpl<Voting, Long> implements 
     }
 
     @Override
+    protected void loadLists(Voting oldBean, Voting newBean) {
+        newBean.setItems(oldBean.getItems());
+    }
+
+    @Override
     public Voting createByTopicId(Long topicId, Voting voting) {
         voting.setTopic(topicDao.findOne(topicId));
         return create(voting);

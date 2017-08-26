@@ -5,35 +5,46 @@ import com.yalovchuk.dao.ItemDao;
 import com.yalovchuk.dto.ItemDto;
 import com.yalovchuk.resource.ItemResource;
 import com.yalovchuk.service.complex._interface.ItemComplexService;
-import com.yalovchuk.service.complex.implementation.base.CrudComplexServiceImpl;
+import com.yalovchuk.service.main.implementation.ItemServiceImpl;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
-public class ItemComplexServiceImpl extends CrudComplexServiceImpl<Item, Long, ItemDto, ItemResource> implements
-        ItemComplexService {
+public class ItemComplexServiceImpl extends ItemServiceImpl implements ItemComplexService {
 
     @Autowired
-    protected ItemDao itemDao;
+    protected ModelMapper modelMapper;
 
     @Override
-    protected Class<Item> getBeanClass() {
-        return Item.class;
+    public Item dtoToBean(ItemDto beanDto) {
+        return null;
     }
 
     @Override
-    protected Class<ItemDto> getDtoClass() {
-        return ItemDto.class;
+    public ItemResource beanToResource(Item bean) {
+        return null;
     }
 
     @Override
-    protected Class<ItemResource> getResourceClass() {
-        return ItemResource.class;
+    public ItemResource createResourceByVotingId(Long votingId, ItemDto itemDto) {
+        Item item = dtoToBean(itemDto);
+        item = super.createByVotingId(votingId, item);
+        return beanToResource(item);
     }
 
     @Override
-    protected CrudRepository<Item, Long> getDao() {
-        return itemDao;
+    public void deleteAllResourcesByVotingId(Long votingId) {
+        super.deleteAllByVotingId(votingId);
+    }
+
+    @Override
+    public List<ItemResource> getAllResourcesByVotingId(Long votingId) {
+        List<Item> items = super.getAllByVotingId(votingId);
+        return items.stream().map(this::beanToResource).collect(Collectors.toList());
     }
 }

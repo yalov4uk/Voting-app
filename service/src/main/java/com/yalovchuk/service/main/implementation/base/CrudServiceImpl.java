@@ -10,6 +10,8 @@ public abstract class CrudServiceImpl<T extends Bean<K>, K extends Number> imple
 
     protected abstract CrudRepository<T, K> getDao();
 
+    protected abstract void loadLists(T oldBean, T newBean);
+
     @Override
     public T create(T bean) {
         return getDao().save(bean);
@@ -21,10 +23,12 @@ public abstract class CrudServiceImpl<T extends Bean<K>, K extends Number> imple
     }
 
     @Override
-    public T update(K id, T bean) {
+    public T update(K id, T newBean) {
         if (getDao().exists(id)) {
-            bean.setId(id);
-            return getDao().save(bean);
+            newBean.setId(id);
+            T oldBean = getDao().findOne(id);
+            loadLists(oldBean, newBean);
+            return getDao().save(newBean);
         }
         return null;
     }

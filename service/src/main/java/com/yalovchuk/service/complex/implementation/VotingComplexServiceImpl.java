@@ -5,35 +5,42 @@ import com.yalovchuk.dao.VotingDao;
 import com.yalovchuk.dto.VotingDto;
 import com.yalovchuk.resource.VotingResource;
 import com.yalovchuk.service.complex._interface.VotingComplexService;
-import com.yalovchuk.service.complex.implementation.base.CrudComplexServiceImpl;
+import com.yalovchuk.service.main.implementation.VotingServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
-public class VotingComplexServiceImpl extends CrudComplexServiceImpl<Voting, Long, VotingDto, VotingResource> implements
-        VotingComplexService {
-
-    @Autowired
-    protected VotingDao votingDao;
+public class VotingComplexServiceImpl extends VotingServiceImpl implements VotingComplexService {
 
     @Override
-    protected Class<Voting> getBeanClass() {
-        return Voting.class;
+    public Voting dtoToBean(VotingDto beanDto) {
+        return null;
     }
 
     @Override
-    protected Class<VotingDto> getDtoClass() {
-        return VotingDto.class;
+    public VotingResource beanToResource(Voting bean) {
+        return null;
     }
 
     @Override
-    protected Class<VotingResource> getResourceClass() {
-        return VotingResource.class;
+    public VotingResource createResourceByTopicId(Long topicId, VotingDto votingDto) {
+        Voting voting = dtoToBean(votingDto);
+        voting = super.createByTopicId(topicId, voting);
+        return beanToResource(voting);
     }
 
     @Override
-    protected CrudRepository<Voting, Long> getDao() {
-        return votingDao;
+    public void deleteAllResourcesByTopicId(Long topicId) {
+        super.deleteAllByTopicId(topicId);
+    }
+
+    @Override
+    public List<VotingResource> getAllResourcesByTopicId(Long topicId) {
+        List<Voting> votings = super.getAllByTopicId(topicId);
+        return votings.stream().map(this::beanToResource).collect(Collectors.toList());
     }
 }
