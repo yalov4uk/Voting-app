@@ -3,8 +3,8 @@ package com.yalovchuk.web.controller.implementation;
 import com.yalovchuk.bean.Voting;
 import com.yalovchuk.dto.VotingDto;
 import com.yalovchuk.resource.VotingResource;
-import com.yalovchuk.service.complex._interface.VotingComplexService;
-import com.yalovchuk.service.complex._interface.mixin.CrudComplexService;
+import com.yalovchuk.service.proxy._interface.VotingProxyService;
+import com.yalovchuk.service.proxy._interface.base.CrudProxyService;
 import com.yalovchuk.web.controller._interface.VotingController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -24,27 +24,27 @@ import java.util.List;
 public class VotingControllerImpl implements VotingController {
 
     @Autowired
-    private VotingComplexService votingComplexService;
+    private VotingProxyService votingProxyService;
 
     @Override
-    public CrudComplexService<Voting, Long, VotingDto, VotingResource> getService() {
-        return votingComplexService;
+    public CrudProxyService<Voting, Long, VotingDto, VotingResource> getService() {
+        return votingProxyService;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public HttpEntity<VotingResource> createVotingByTopicId(@PathVariable Long topicId,
                                                             @RequestBody VotingDto votingDto) {
-        return new ResponseEntity<>(votingComplexService.createResourceByTopicId(topicId, votingDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(votingProxyService.createResourceByTopicId(topicId, votingDto), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
     public HttpStatus deleteAllVotingsByTopicId(@PathVariable Long topicId) {
-        votingComplexService.deleteAllResourcesByTopicId(topicId);
+        votingProxyService.deleteAllResourcesByTopicId(topicId);
         return HttpStatus.NO_CONTENT;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public HttpEntity<List<VotingResource>> getAllVotingsByTopicId(@PathVariable Long topicId) {
-        return new ResponseEntity<>(votingComplexService.getAllResourcesByTopicId(topicId), HttpStatus.OK);
+        return new ResponseEntity<>(votingProxyService.getAllResourcesByTopicId(topicId), HttpStatus.OK);
     }
 }
