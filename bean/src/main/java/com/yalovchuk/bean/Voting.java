@@ -21,7 +21,7 @@ public class Voting extends NamedBean<Long> {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "voting", fetch = FetchType.LAZY)
     private Set<Item> items = new HashSet<>();
 
-    protected Voting() {
+    public Voting() {
         super();
     }
 

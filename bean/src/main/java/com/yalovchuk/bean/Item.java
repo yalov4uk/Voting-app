@@ -16,7 +16,7 @@ public class Item extends NamedBean<Long> {
     @JoinColumn(name = "voting_id", nullable = false)
     private Voting voting;
 
-    protected Item() {
+    public Item() {
         super();
     }
 

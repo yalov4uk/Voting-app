@@ -6,6 +6,10 @@ public abstract class NamedBeanDto<T extends NamedBean<K>, K extends Number> ext
 
     private String name;
 
+    protected NamedBeanDto() {
+        super();
+    }
+
     public NamedBeanDto(K id, String name) {
         super(id);
         this.name = name;

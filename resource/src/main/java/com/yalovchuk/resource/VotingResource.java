@@ -8,8 +8,12 @@ public class VotingResource extends NamedBeanResource<Voting, Long> {
     private Boolean enable;
     private TopicResource topic;
 
-    public VotingResource(Long pk, String name, Boolean enable, TopicResource topic) {
-        super(pk, name);
+    public VotingResource() {
+        super();
+    }
+
+    public VotingResource(Long id, String name, Boolean enable, TopicResource topic) {
+        super(id, name);
         this.enable = enable;
         this.topic = topic;
     }
@@ -24,7 +28,15 @@ public class VotingResource extends NamedBeanResource<Voting, Long> {
         return enable;
     }
 
+    public void setEnable(Boolean enable) {
+        this.enable = enable;
+    }
+
     public TopicResource getTopic() {
         return topic;
+    }
+
+    public void setTopic(TopicResource topic) {
+        this.topic = topic;
     }
 }

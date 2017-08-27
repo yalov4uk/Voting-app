@@ -13,7 +13,7 @@ public class Topic extends NamedBean<Long> {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic", fetch = FetchType.LAZY)
     private Set<Voting> votings = new HashSet<>();
 
-    protected Topic() {
+    public Topic() {
         super();
     }
 

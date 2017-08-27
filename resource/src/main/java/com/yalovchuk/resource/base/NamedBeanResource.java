@@ -2,12 +2,16 @@ package com.yalovchuk.resource.base;
 
 import com.yalovchuk.bean.base.NamedBean;
 
-public class NamedBeanResource<T extends NamedBean<K>, K extends Number> extends BeanResource<T, K> {
+public abstract class NamedBeanResource<T extends NamedBean<K>, K extends Number> extends BeanResource<T, K> {
 
     private String name;
 
-    protected NamedBeanResource(K pk, String name) {
-        super(pk);
+    protected NamedBeanResource() {
+        super();
+    }
+
+    protected NamedBeanResource(K id, String name) {
+        super(id);
         this.name = name;
     }
 
@@ -18,5 +22,9 @@ public class NamedBeanResource<T extends NamedBean<K>, K extends Number> extends
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

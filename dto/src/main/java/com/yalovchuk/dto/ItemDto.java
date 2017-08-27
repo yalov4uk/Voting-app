@@ -8,6 +8,10 @@ public class ItemDto extends NamedBeanDto<Item, Long> {
     private Integer score;
     private Long votingId;
 
+    public ItemDto() {
+        super();
+    }
+
     public ItemDto(Long id, String name, Integer score, Long votingId) {
         super(id, name);
         this.score = score;

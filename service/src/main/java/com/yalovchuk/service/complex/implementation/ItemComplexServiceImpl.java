@@ -5,7 +5,8 @@ import com.yalovchuk.dto.ItemDto;
 import com.yalovchuk.resource.ItemResource;
 import com.yalovchuk.service.complex._interface.ItemComplexService;
 import com.yalovchuk.service.main.implementation.ItemServiceImpl;
-import org.modelmapper.ModelMapper;
+import com.yalovchuk.service.utils.mapper._interface.ItemMapper;
+import com.yalovchuk.service.utils.mapper._interface.base.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,25 +17,18 @@ import java.util.stream.Collectors;
 public class ItemComplexServiceImpl extends ItemServiceImpl implements ItemComplexService {
 
     @Autowired
-    protected ModelMapper modelMapper;
+    protected ItemMapper itemMapper;
 
     @Override
-    public Item dtoToBean(ItemDto beanDto) {
-        Item item = modelMapper.map(beanDto, Item.class);
-        if (beanDto.getVotingId() != null) item.setVoting(votingDao.findOne(beanDto.getVotingId()));
-        return item;
-    }
-
-    @Override
-    public ItemResource beanToResource(Item bean) {
-        return modelMapper.map(bean, ItemResource.class);
+    public Mapper<Item, Long, ItemDto, ItemResource> getMapper() {
+        return itemMapper;
     }
 
     @Override
     public ItemResource createResourceByVotingId(Long votingId, ItemDto itemDto) {
-        Item item = dtoToBean(itemDto);
+        Item item = itemMapper.dtoToBean(itemDto);
         item = super.createByVotingId(votingId, item);
-        return beanToResource(item);
+        return itemMapper.beanToResource(item);
     }
 
     @Override
@@ -45,6 +39,6 @@ public class ItemComplexServiceImpl extends ItemServiceImpl implements ItemCompl
     @Override
     public List<ItemResource> getAllResourcesByVotingId(Long votingId) {
         List<Item> items = super.getAllByVotingId(votingId);
-        return items.stream().map(this::beanToResource).collect(Collectors.toList());
+        return items.stream().map(this.itemMapper::beanToResource).collect(Collectors.toList());
     }
 }

@@ -8,6 +8,10 @@ public class VotingDto extends NamedBeanDto<Voting, Long> {
     private Boolean enable;
     private Long topicId;
 
+    public VotingDto() {
+        super();
+    }
+
     public VotingDto(Long id, String name, Boolean enable, Long topicId) {
         super(id, name);
         this.enable = enable;

@@ -8,8 +8,12 @@ public class ItemResource extends NamedBeanResource<Item, Long> {
     private Integer score;
     private VotingResource voting;
 
-    public ItemResource(Long pk, String name, Integer score, VotingResource voting) {
-        super(pk, name);
+    public ItemResource() {
+        super();
+    }
+
+    public ItemResource(Long id, String name, Integer score, VotingResource voting) {
+        super(id, name);
         this.score = score;
         this.voting = voting;
     }
@@ -24,7 +28,15 @@ public class ItemResource extends NamedBeanResource<Item, Long> {
         return score;
     }
 
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
     public VotingResource getVoting() {
         return voting;
+    }
+
+    public void setVoting(VotingResource voting) {
+        this.voting = voting;
     }
 }

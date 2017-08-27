@@ -5,6 +5,10 @@ import com.yalovchuk.dto.base.NamedBeanDto;
 
 public class TopicDto extends NamedBeanDto<Topic, Long> {
 
+    public TopicDto() {
+        super();
+    }
+
     public TopicDto(Long id, String name) {
         super(id, name);
     }

@@ -5,7 +5,8 @@ import com.yalovchuk.dto.TopicDto;
 import com.yalovchuk.resource.TopicResource;
 import com.yalovchuk.service.complex._interface.TopicComplexService;
 import com.yalovchuk.service.main.implementation.TopicServiceImpl;
-import org.modelmapper.ModelMapper;
+import com.yalovchuk.service.utils.mapper._interface.TopicMapper;
+import com.yalovchuk.service.utils.mapper._interface.base.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,16 +14,10 @@ import org.springframework.stereotype.Service;
 public class TopicComplexServiceImpl extends TopicServiceImpl implements TopicComplexService {
 
     @Autowired
-    protected ModelMapper modelMapper;
+    protected TopicMapper topicMapper;
 
     @Override
-    public Topic dtoToBean(TopicDto beanDto) {
-        Topic topic = modelMapper.map(beanDto, Topic.class);
-        return topic;
-    }
-
-    @Override
-    public TopicResource beanToResource(Topic bean) {
-        return modelMapper.map(bean, TopicResource.class);
+    public Mapper<Topic, Long, TopicDto, TopicResource> getMapper() {
+        return topicMapper;
     }
 }

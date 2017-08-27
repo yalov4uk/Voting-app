@@ -6,6 +6,9 @@ public abstract class BeanDto<T extends Bean<K>, K extends Number> {
 
     private K id;
 
+    protected BeanDto() {
+    }
+
     public BeanDto(K id) {
         this.id = id;
     }

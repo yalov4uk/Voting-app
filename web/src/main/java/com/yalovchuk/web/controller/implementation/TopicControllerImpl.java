@@ -1,10 +1,11 @@
-package com.yalovchuk.web.controller;
+package com.yalovchuk.web.controller.implementation;
 
 import com.yalovchuk.bean.Topic;
+import com.yalovchuk.dto.TopicDto;
 import com.yalovchuk.resource.TopicResource;
-import com.yalovchuk.service.main._interface.TopicService;
-import com.yalovchuk.service.main._interface.base.CrudService;
-import com.yalovchuk.web.controller.base.mixin.*;
+import com.yalovchuk.service.complex._interface.TopicComplexService;
+import com.yalovchuk.service.complex._interface.mixin.CrudComplexService;
+import com.yalovchuk.web.controller._interface.TopicController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -23,27 +24,21 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE
 )
-public class TopicController implements
-        CreateController<Topic, Long>,
-        ReadController<Topic, Long>,
-        UpdateController<Topic, Long>,
-        DeleteController<Topic, Long>,
-        GetAllController<Topic, Long> {
+public class TopicControllerImpl implements TopicController {
 
     @Autowired
-    private TopicService topicService;
+    private TopicComplexService topicComplexService;
 
     @Override
-    public CrudService<Topic, Long> getService() {
-        return topicService;
+    public CrudComplexService<Topic, Long, TopicDto, TopicResource> getService() {
+        return topicComplexService;
     }
 
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public HttpEntity test() {
         TopicResource topicResource = new TopicResource(8L, "resource Test");
-        topicResource.add(linkTo(methodOn(TopicController.class).getAll()).withSelfRel());
+        topicResource.add(linkTo(methodOn(TopicControllerImpl.class).getAll()).withSelfRel());
         return new ResponseEntity<>(topicResource, HttpStatus.OK);
     }
-
 }
