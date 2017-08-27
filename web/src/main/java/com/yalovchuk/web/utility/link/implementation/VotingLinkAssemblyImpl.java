@@ -1,6 +1,10 @@
 package com.yalovchuk.web.utility.link.implementation;
 
 import com.yalovchuk.resource.VotingResource;
+import com.yalovchuk.web.controller._interface.ItemController;
+import com.yalovchuk.web.controller._interface.TopicController;
+import com.yalovchuk.web.controller._interface.VotingController;
+import com.yalovchuk.web.controller.implementation.ItemControllerImpl;
 import com.yalovchuk.web.controller.implementation.TopicControllerImpl;
 import com.yalovchuk.web.controller.implementation.VotingControllerImpl;
 import com.yalovchuk.web.utility.link._interface.TopicLinkAssembly;
@@ -23,7 +27,9 @@ public class VotingLinkAssemblyImpl implements VotingLinkAssembly {
         Long topicId = resource.getTopic().getPk();
         resource.add(
                 linkTo(methodOn(VotingControllerImpl.class).readVotingByTopicIdAndId(topicId, votingId)).withSelfRel(),
-                linkTo(methodOn(TopicControllerImpl.class).read(topicId)).withRel("topic")
+                linkTo(methodOn(TopicControllerImpl.class).read(topicId)).withRel("topic"),
+                linkTo(methodOn(ItemControllerImpl.class).getAllItemsByTopicIdAndVotingId(topicId, votingId))
+                        .withRel("items")
         );
         topicLinkAssembly.addLinks(resource.getTopic());
     }

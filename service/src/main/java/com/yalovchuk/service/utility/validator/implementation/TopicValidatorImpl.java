@@ -6,6 +6,5 @@ import com.yalovchuk.service.utility.validator.implementation.base.NamedBeanVali
 import org.springframework.stereotype.Service;
 
 @Service
-public class TopicValidatorImpl extends NamedBeanValidatorImpl<Topic, Long>
-        implements TopicValidator {
+public class TopicValidatorImpl extends NamedBeanValidatorImpl<Topic, Long> implements TopicValidator {
 }

@@ -11,11 +11,13 @@ import com.yalovchuk.service.utility.mapper._interface.ItemMapper;
 import com.yalovchuk.service.utility.mapper._interface.base.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class ItemProxyServiceImpl extends CrudProxyService<Item, Long, ItemDto, ItemResource>
         implements ItemProxyService {
 
@@ -69,5 +71,10 @@ public class ItemProxyServiceImpl extends CrudProxyService<Item, Long, ItemDto, 
     public List<ItemResource> getAllByTopicIdAndVotingId(Long topicId, Long votingId) {
         List<Item> items = itemService.getAllByTopicIdAndVotingId(topicId, votingId);
         return items.stream().map(this.itemMapper::beanToResource).collect(Collectors.toList());
+    }
+
+    @Override
+    public void registerItem(Long topicId, Long votingId, Long itemId) {
+        itemService.registerItem(topicId, votingId, itemId);
     }
 }

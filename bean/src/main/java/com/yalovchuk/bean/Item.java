@@ -26,6 +26,10 @@ public class Item extends NamedBean<Long> {
         this.voting = voting;
     }
 
+    public synchronized void incScore() {
+        score++;
+    }
+
     public Integer getScore() {
         return score;
     }

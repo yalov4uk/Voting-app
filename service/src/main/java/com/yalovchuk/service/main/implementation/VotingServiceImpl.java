@@ -4,6 +4,7 @@ import com.yalovchuk.bean.Topic;
 import com.yalovchuk.bean.Voting;
 import com.yalovchuk.dao.VotingDao;
 import com.yalovchuk.service.exception.NotFoundException;
+import com.yalovchuk.service.exception.NotValidException;
 import com.yalovchuk.service.main._interface.TopicService;
 import com.yalovchuk.service.main._interface.VotingService;
 import com.yalovchuk.service.main.implementation.base.CrudServiceImpl;
@@ -47,6 +48,13 @@ public class VotingServiceImpl extends CrudServiceImpl<Voting, Long> implements 
     }
 
     @Override
+    public Voting read(Long id) {
+        Voting voting = votingDao.findByIdAndEnableTrue(id);
+        if (voting == null) throw new NotFoundException();
+        return voting;
+    }
+
+    @Override
     public Voting update(Voting newBean, Long id) {
         newBean.setEnable(false);
         return super.update(newBean, id);
@@ -61,7 +69,7 @@ public class VotingServiceImpl extends CrudServiceImpl<Voting, Long> implements 
 
     @Override
     public Voting readByTopicIdAndId(Long topicId, Long votingId) {
-        Voting voting = super.read(votingId);
+        Voting voting = read(votingId);
         if (voting.getTopic() == null || !Objects.equals(voting.getTopic().getId(), topicId))
             throw new NotFoundException();
         return voting;
@@ -86,6 +94,16 @@ public class VotingServiceImpl extends CrudServiceImpl<Voting, Long> implements 
 
     @Override
     public List<Voting> getAllByTopicId(Long topicId) {
-        return votingDao.getAllByTopicId(topicId);
+        return votingDao.getAllByTopicIdAndEnableTrue(topicId);
+    }
+
+    @Override
+    public Voting enableVoting(Boolean enable, Long topicId, Long votingId) {
+        if (enable == null) throw new NotValidException();
+        Voting voting = super.read(votingId);
+        if (voting.getTopic() == null || !Objects.equals(voting.getTopic().getId(), topicId))
+            throw new NotFoundException();
+        voting.setEnable(enable);
+        return voting;
     }
 }

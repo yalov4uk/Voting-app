@@ -11,11 +11,13 @@ import com.yalovchuk.service.utility.mapper._interface.VotingMapper;
 import com.yalovchuk.service.utility.mapper._interface.base.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class VotingProxyServiceImpl extends CrudProxyService<Voting, Long, VotingDto, VotingResource>
         implements VotingProxyService {
 
@@ -67,6 +69,12 @@ public class VotingProxyServiceImpl extends CrudProxyService<Voting, Long, Votin
     @Override
     public List<VotingResource> getAllByTopicId(Long topicId) {
         List<Voting> votings = votingService.getAllByTopicId(topicId);
-        return votings.stream().map(this.votingMapper::beanToResource).collect(Collectors.toList());
+        return votings.stream().map(votingMapper::beanToResource).collect(Collectors.toList());
+    }
+
+    @Override
+    public VotingResource enableVoting(Boolean enable, Long topicId, Long votingId) {
+        Voting voting = votingService.enableVoting(enable, topicId, votingId);
+        return votingMapper.beanToResource(voting);
     }
 }

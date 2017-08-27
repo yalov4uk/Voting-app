@@ -34,21 +34,21 @@ public abstract class CrudControllerImpl<
         return new ResponseEntity<>(resource, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/", method = RequestMethod.GET)
     public HttpEntity<R> read(@PathVariable K id) {
         R resource = getService().read(id);
         addLinks(resource);
         return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}/", method = RequestMethod.PUT)
     public HttpEntity<R> update(@RequestBody D beanDto, @PathVariable K id) {
         R resource = getService().update(beanDto, id);
         addLinks(resource);
         return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}/", method = RequestMethod.DELETE)
     public HttpStatus delete(@PathVariable K id) {
         getService().delete(id);
         return HttpStatus.NO_CONTENT;

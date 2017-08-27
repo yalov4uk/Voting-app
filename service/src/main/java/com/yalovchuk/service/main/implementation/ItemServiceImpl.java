@@ -46,6 +46,13 @@ public class ItemServiceImpl extends CrudServiceImpl<Item, Long> implements Item
     }
 
     @Override
+    public Item read(Long id) {
+        Item item = itemDao.findByIdAndVotingEnableTrue(id);
+        if (item == null) throw new NotFoundException();
+        return item;
+    }
+
+    @Override
     public Item update(Item newBean, Long id) {
         newBean.setScore(itemDao.findOne(id).getScore());
         return super.update(newBean, id);
@@ -60,9 +67,9 @@ public class ItemServiceImpl extends CrudServiceImpl<Item, Long> implements Item
 
     @Override
     public Item readByTopicIdAndVotingIdAndId(Long topicId, Long votingId, Long itemId) {
-        Item item = super.read(itemId);
-        if (item.getVoting() != null || !Objects.equals(item.getVoting().getId(), votingId)
-                || item.getVoting().getTopic() != null
+        Item item = read(itemId);
+        if (item.getVoting() == null || !Objects.equals(item.getVoting().getId(), votingId)
+                || item.getVoting().getTopic() == null
                 || !Objects.equals(item.getVoting().getTopic().getId(), topicId))
             throw new NotFoundException();
         return item;
@@ -86,6 +93,12 @@ public class ItemServiceImpl extends CrudServiceImpl<Item, Long> implements Item
 
     @Override
     public List<Item> getAllByTopicIdAndVotingId(Long topicId, Long votingId) {
-        return itemDao.getAllByVotingTopicIdAndVotingId(topicId, votingId);
+        return itemDao.getAllByVotingTopicIdAndVotingIdAndVotingEnableTrue(topicId, votingId);
+    }
+
+    @Override
+    public void registerItem(Long topicId, Long votingId, Long itemId) {
+        Item item = readByTopicIdAndVotingIdAndId(topicId, votingId, itemId);
+        item.incScore();
     }
 }

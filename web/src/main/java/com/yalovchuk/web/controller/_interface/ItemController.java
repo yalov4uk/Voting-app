@@ -20,4 +20,6 @@ public interface ItemController {
     HttpStatus deleteAllItemsByTopicIdAndVotingId(Long topicId, Long votingId);
 
     HttpEntity<List<ItemResource>> getAllItemsByTopicIdAndVotingId(Long topicId, Long votingId);
+
+    HttpStatus registerItem(Long topicId, Long votingId, Long itemId);
 }

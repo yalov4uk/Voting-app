@@ -18,4 +18,6 @@ public interface VotingService extends CrudService<Voting, Long> {
     void deleteAllByTopicId(Long topicId);
 
     List<Voting> getAllByTopicId(Long topicId);
+
+    Voting enableVoting(Boolean Enable, Long topicId, Long votingId);
 }

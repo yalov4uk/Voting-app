@@ -20,4 +20,6 @@ public interface VotingController {
     HttpStatus deleteAllVotingsByTopicId(Long topicId);
 
     HttpEntity<List<VotingResource>> getAllVotingsByTopicId(Long topicId);
+
+    HttpEntity<VotingResource> enableVoting(Long topicId, Long votingId, Boolean enable);
 }

@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(
-        value = "topics/{topicId}/votings/{votingId}/items",
+        value = "topics/{topicId}/votings/{votingId}/items/",
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE
 )
@@ -35,7 +35,7 @@ public class ItemControllerImpl implements ItemController {
         return new ResponseEntity<>(itemResource, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/{itemId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{itemId}/", method = RequestMethod.GET)
     public HttpEntity<ItemResource> readItemByTopicIdAndVotingIdAndId(@PathVariable Long topicId,
                                                                       @PathVariable Long votingId,
                                                                       @PathVariable Long itemId) {
@@ -44,7 +44,7 @@ public class ItemControllerImpl implements ItemController {
         return new ResponseEntity<>(itemResource, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{itemId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{itemId}/", method = RequestMethod.PUT)
     public HttpEntity<ItemResource> updateItemByTopicIdAndVotingIdAndId(@RequestBody ItemDto itemDto, @PathVariable Long topicId,
                                                                         @PathVariable Long votingId,
                                                                         @PathVariable Long itemId) {
@@ -53,7 +53,7 @@ public class ItemControllerImpl implements ItemController {
         return new ResponseEntity<>(itemResource, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{itemId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{itemId}/", method = RequestMethod.DELETE)
     public HttpStatus deleteAllItemsByTopicIdAndVotingId(@PathVariable Long topicId, @PathVariable Long votingId,
                                                          @PathVariable Long itemId) {
         itemProxyService.deleteByTopicIdAndVotingIdAndId(topicId, votingId, itemId);
@@ -72,6 +72,12 @@ public class ItemControllerImpl implements ItemController {
         List<ItemResource> itemResources = itemProxyService.getAllByTopicIdAndVotingId(topicId, votingId);
         itemResources.forEach(this::addLinks);
         return new ResponseEntity<>(itemResources, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{itemId}/", method = RequestMethod.POST)
+    public HttpStatus registerItem(@PathVariable Long topicId, @PathVariable Long votingId, @PathVariable Long itemId) {
+        itemProxyService.registerItem(topicId, votingId, itemId);
+        return HttpStatus.OK;
     }
 
     private void addLinks(ItemResource resource) {
