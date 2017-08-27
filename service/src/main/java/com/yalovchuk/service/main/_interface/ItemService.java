@@ -7,9 +7,15 @@ import java.util.List;
 
 public interface ItemService extends CrudService<Item, Long> {
 
-    Item createByVotingId(Long votingId, Item item);
+    Item createByTopicIdAndVotingId(Item item, Long topicId, Long votingId);
 
-    void deleteAllByVotingId(Long votingId);
+    Item readByTopicIdAndVotingIdAndId(Long topicId, Long votingId, Long itemId);
 
-    List<Item> getAllByVotingId(Long votingId);
+    Item updateByTopicIdAndVotingIdAndId(Item item, Long topicId, Long votingId, Long itemId);
+
+    void deleteByTopicIdAndVotingIdAndId(Long topicId, Long votingId, Long itemId);
+
+    void deleteAllByTopicIdAndVotingId(Long topicId, Long votingId);
+
+    List<Item> getAllByTopicIdAndVotingId(Long topicId, Long votingId);
 }

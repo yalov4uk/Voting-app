@@ -3,18 +3,18 @@ package com.yalovchuk.service.main.implementation;
 import com.yalovchuk.bean.Item;
 import com.yalovchuk.bean.Voting;
 import com.yalovchuk.dao.ItemDao;
-import com.yalovchuk.dao.VotingDao;
 import com.yalovchuk.service.exception.NotFoundException;
-import com.yalovchuk.service.exception.NotValidException;
 import com.yalovchuk.service.main._interface.ItemService;
+import com.yalovchuk.service.main._interface.VotingService;
 import com.yalovchuk.service.main.implementation.base.CrudServiceImpl;
-import com.yalovchuk.service.utils.validator._interface.ItemValidator;
-import com.yalovchuk.service.utils.validator._interface.base.NamedBeanValidator;
+import com.yalovchuk.service.utility.validator._interface.ItemValidator;
+import com.yalovchuk.service.utility.validator._interface.base.NamedBeanValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ItemServiceImpl extends CrudServiceImpl<Item, Long> implements ItemService {
@@ -22,7 +22,7 @@ public class ItemServiceImpl extends CrudServiceImpl<Item, Long> implements Item
     @Autowired
     protected ItemDao itemDao;
     @Autowired
-    protected VotingDao votingDao;
+    protected VotingService votingService;
     @Autowired
     protected ItemValidator itemValidator;
 
@@ -41,31 +41,51 @@ public class ItemServiceImpl extends CrudServiceImpl<Item, Long> implements Item
 
     @Override
     public Item create(Item bean) {
-        if (!itemValidator.validateScore(bean)) throw new NotValidException();
+        bean.setScore(0);
         return super.create(bean);
     }
 
     @Override
-    public Item update(Long id, Item newBean) {
-        if (!itemValidator.validateScore(newBean)) throw new NotValidException();
-        return super.update(id, newBean);
+    public Item update(Item newBean, Long id) {
+        newBean.setScore(itemDao.findOne(id).getScore());
+        return super.update(newBean, id);
     }
 
     @Override
-    public Item createByVotingId(Long votingId, Item item) {
-        Voting voting = votingDao.findOne(votingId);
-        if (voting == null) throw new NotFoundException();
+    public Item createByTopicIdAndVotingId(Item item, Long topicId, Long votingId) {
+        Voting voting = votingService.readByTopicIdAndId(topicId, votingId);
         item.setVoting(voting);
         return create(item);
     }
 
     @Override
-    public void deleteAllByVotingId(Long votingId) {
-        itemDao.deleteAllByVotingId(votingId);
+    public Item readByTopicIdAndVotingIdAndId(Long topicId, Long votingId, Long itemId) {
+        Item item = super.read(itemId);
+        if (item.getVoting() != null || !Objects.equals(item.getVoting().getId(), votingId)
+                || item.getVoting().getTopic() != null
+                || !Objects.equals(item.getVoting().getTopic().getId(), topicId))
+            throw new NotFoundException();
+        return item;
     }
 
     @Override
-    public List<Item> getAllByVotingId(Long votingId) {
-        return itemDao.getAllByVotingId(votingId);
+    public Item updateByTopicIdAndVotingIdAndId(Item newItem, Long topicId, Long votingId, Long itemId) {
+        readByTopicIdAndVotingIdAndId(topicId, votingId, itemId);
+        return update(newItem, votingId);
+    }
+
+    @Override
+    public void deleteByTopicIdAndVotingIdAndId(Long topicId, Long votingId, Long itemId) {
+        itemDao.deleteByVotingTopicIdAndVotingIdAndId(topicId, votingId, itemId);
+    }
+
+    @Override
+    public void deleteAllByTopicIdAndVotingId(Long topicId, Long votingId) {
+        itemDao.deleteAllByVotingTopicIdAndVotingId(topicId, votingId);
+    }
+
+    @Override
+    public List<Item> getAllByTopicIdAndVotingId(Long topicId, Long votingId) {
+        return itemDao.getAllByVotingTopicIdAndVotingId(topicId, votingId);
     }
 }

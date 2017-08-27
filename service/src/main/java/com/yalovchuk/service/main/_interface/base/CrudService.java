@@ -10,7 +10,7 @@ public interface CrudService<T extends Bean<K>, K extends Number> {
 
     T read(K id);
 
-    T update(K id, T bean);
+    T update(T newBean, K id);
 
     void delete(K id);
 

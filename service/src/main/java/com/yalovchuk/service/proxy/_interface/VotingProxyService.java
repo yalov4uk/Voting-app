@@ -9,9 +9,15 @@ import java.util.List;
 
 public interface VotingProxyService extends CrudProxyService<Voting, Long, VotingDto, VotingResource> {
 
-    VotingResource createResourceByTopicId(Long topicId, VotingDto votingDto);
+    VotingResource createByTopicId(VotingDto votingDto, Long topicId);
 
-    void deleteAllResourcesByTopicId(Long topicId);
+    VotingResource readByTopicIdAndId(Long topicId, Long votingId);
 
-    List<VotingResource> getAllResourcesByTopicId(Long topicId);
+    VotingResource updateByTopicIdAndId(VotingDto votingDto, Long topicId, Long votingId);
+
+    void deleteByTopicIdAndId(Long topicId, Long votingId);
+
+    void deleteAllByTopicId(Long topicId);
+
+    List<VotingResource> getAllByTopicId(Long topicId);
 }

@@ -9,9 +9,15 @@ import java.util.List;
 
 public interface ItemProxyService extends CrudProxyService<Item, Long, ItemDto, ItemResource> {
 
-    ItemResource createByVotingId(Long votingId, ItemDto itemDto);
+    ItemResource createByTopicIdAndVotingId(ItemDto itemDto, Long topicId, Long votingId);
 
-    void deleteAllByVotingId(Long votingId);
+    ItemResource readByTopicIdAndVotingIdAndId(Long topicId, Long votingId, Long itemId);
 
-    List<ItemResource> getAllByVotingId(Long votingId);
+    ItemResource updateByTopicIdAndVotingIdAndId(ItemDto itemDto, Long topicId, Long votingId, Long itemId);
+
+    void deleteByTopicIdAndVotingIdAndId(Long topicId, Long votingId, Long itemId);
+
+    void deleteAllByTopicIdAndVotingId(Long topicId, Long votingId);
+
+    List<ItemResource> getAllByTopicIdAndVotingId(Long topicId, Long votingId);
 }

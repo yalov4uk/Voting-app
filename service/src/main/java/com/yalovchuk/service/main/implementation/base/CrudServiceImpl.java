@@ -4,7 +4,7 @@ import com.yalovchuk.bean.base.NamedBean;
 import com.yalovchuk.service.exception.NotFoundException;
 import com.yalovchuk.service.exception.NotValidException;
 import com.yalovchuk.service.main._interface.base.CrudService;
-import com.yalovchuk.service.utils.validator._interface.base.NamedBeanValidator;
+import com.yalovchuk.service.utility.validator._interface.base.NamedBeanValidator;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -32,7 +32,7 @@ public abstract class CrudServiceImpl<T extends NamedBean<K>, K extends Number> 
     }
 
     @Override
-    public T update(K id, T newBean) {
+    public T update(T newBean, K id) {
         if (!getValidator().validateId(newBean) || !getValidator().validateName(newBean)) throw new NotValidException();
         T oldBean = getDao().findOne(id);
         if (oldBean == null) throw new NotFoundException();

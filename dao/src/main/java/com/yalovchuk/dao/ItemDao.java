@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface ItemDao extends CrudRepository<Item, Long> {
 
-    void deleteAllByVotingId(Long votingId);
+    void deleteByVotingTopicIdAndVotingIdAndId(Long topicId, Long votingId, Long itemId);
 
-    List<Item> getAllByVotingId(Long votingId);
+    void deleteAllByVotingTopicIdAndVotingId(Long topicId, Long votingId);
+
+    List<Item> getAllByVotingTopicIdAndVotingId(Long topicId, Long votingId);
 }

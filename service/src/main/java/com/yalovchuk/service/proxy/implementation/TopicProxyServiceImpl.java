@@ -7,8 +7,8 @@ import com.yalovchuk.service.main._interface.TopicService;
 import com.yalovchuk.service.main._interface.base.CrudService;
 import com.yalovchuk.service.proxy._interface.TopicProxyService;
 import com.yalovchuk.service.proxy.implementation.base.CrudProxyService;
-import com.yalovchuk.service.utils.mapper._interface.TopicMapper;
-import com.yalovchuk.service.utils.mapper._interface.base.Mapper;
+import com.yalovchuk.service.utility.mapper._interface.TopicMapper;
+import com.yalovchuk.service.utility.mapper._interface.base.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

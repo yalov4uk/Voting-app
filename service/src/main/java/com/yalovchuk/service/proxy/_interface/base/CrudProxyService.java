@@ -17,7 +17,7 @@ public interface CrudProxyService<
 
     R read(K id);
 
-    R update(K id, D beanDto);
+    R update(D beanDto, K id);
 
     void delete(K id);
 

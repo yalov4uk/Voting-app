@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface VotingDao extends CrudRepository<Voting, Long> {
 
+    void deleteByTopicIdAndId(Long topicId, Long votingId);
+
     void deleteAllByTopicId(Long topicId);
 
     List<Voting> getAllByTopicId(Long topicId);

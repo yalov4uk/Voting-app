@@ -4,7 +4,7 @@ import com.yalovchuk.bean.base.Bean;
 import com.yalovchuk.dto.base.BeanDto;
 import com.yalovchuk.resource.base.BeanResource;
 import com.yalovchuk.service.main._interface.base.CrudService;
-import com.yalovchuk.service.utils.mapper._interface.base.Mapper;
+import com.yalovchuk.service.utility.mapper._interface.base.Mapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,9 +31,9 @@ public abstract class CrudProxyService<
         return getMapper().beanToResource(bean);
     }
 
-    public R update(K id, D beanDto) {
+    public R update(D beanDto, K id) {
         T bean = getMapper().dtoToBean(beanDto);
-        bean = getService().update(id, bean);
+        bean = getService().update(bean, id);
         return getMapper().beanToResource(bean);
     }
 

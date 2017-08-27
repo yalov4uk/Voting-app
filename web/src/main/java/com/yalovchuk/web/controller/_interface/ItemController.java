@@ -1,14 +1,23 @@
 package com.yalovchuk.web.controller._interface;
 
-import com.yalovchuk.bean.Item;
 import com.yalovchuk.dto.ItemDto;
 import com.yalovchuk.resource.ItemResource;
-import com.yalovchuk.web.controller._interface.base.mixin.DeleteController;
-import com.yalovchuk.web.controller._interface.base.mixin.ReadController;
-import com.yalovchuk.web.controller._interface.base.mixin.UpdateController;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 
-public interface ItemController extends
-        ReadController<Item, Long, ItemDto, ItemResource>,
-        UpdateController<Item, Long, ItemDto, ItemResource>,
-        DeleteController<Item, Long, ItemDto, ItemResource> {
+import java.util.List;
+
+public interface ItemController {
+
+    HttpEntity<ItemResource> createItemByTopicIdAndVotingId(ItemDto itemDto, Long topicId, Long votingId);
+
+    HttpEntity<ItemResource> readItemByTopicIdAndVotingIdAndId(Long topicId, Long votingId, Long itemId);
+
+    HttpEntity<ItemResource> updateItemByTopicIdAndVotingIdAndId(ItemDto itemDto, Long topicId, Long votingId, Long itemId);
+
+    HttpStatus deleteAllItemsByTopicIdAndVotingId(Long topicId, Long votingId, Long itemId);
+
+    HttpStatus deleteAllItemsByTopicIdAndVotingId(Long topicId, Long votingId);
+
+    HttpEntity<List<ItemResource>> getAllItemsByTopicIdAndVotingId(Long topicId, Long votingId);
 }

@@ -1,11 +1,10 @@
 package com.yalovchuk.web.controller.implementation;
 
-import com.yalovchuk.bean.Item;
 import com.yalovchuk.dto.ItemDto;
 import com.yalovchuk.resource.ItemResource;
 import com.yalovchuk.service.proxy._interface.ItemProxyService;
-import com.yalovchuk.service.proxy._interface.base.CrudProxyService;
 import com.yalovchuk.web.controller._interface.ItemController;
+import com.yalovchuk.web.utility.link._interface.ItemLinkAssembly;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -25,25 +24,57 @@ public class ItemControllerImpl implements ItemController {
 
     @Autowired
     private ItemProxyService itemProxyService;
-
-    @Override
-    public CrudProxyService<Item, Long, ItemDto, ItemResource> getService() {
-        return itemProxyService;
-    }
+    @Autowired
+    private ItemLinkAssembly itemLinkAssembly;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public HttpEntity<ItemResource> createItemByVotingId(@PathVariable Long votingId, @RequestBody ItemDto itemDto) {
-        return new ResponseEntity<>(itemProxyService.createByVotingId(votingId, itemDto), HttpStatus.CREATED);
+    public HttpEntity<ItemResource> createItemByTopicIdAndVotingId(@RequestBody ItemDto itemDto, @PathVariable Long topicId,
+                                                                   @PathVariable Long votingId) {
+        ItemResource itemResource = itemProxyService.createByTopicIdAndVotingId(itemDto, topicId, votingId);
+        addLinks(itemResource);
+        return new ResponseEntity<>(itemResource, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/{itemId}", method = RequestMethod.GET)
+    public HttpEntity<ItemResource> readItemByTopicIdAndVotingIdAndId(@PathVariable Long topicId,
+                                                                      @PathVariable Long votingId,
+                                                                      @PathVariable Long itemId) {
+        ItemResource itemResource = itemProxyService.readByTopicIdAndVotingIdAndId(topicId, votingId, itemId);
+        addLinks(itemResource);
+        return new ResponseEntity<>(itemResource, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{itemId}", method = RequestMethod.PUT)
+    public HttpEntity<ItemResource> updateItemByTopicIdAndVotingIdAndId(@RequestBody ItemDto itemDto, @PathVariable Long topicId,
+                                                                        @PathVariable Long votingId,
+                                                                        @PathVariable Long itemId) {
+        ItemResource itemResource = itemProxyService.updateByTopicIdAndVotingIdAndId(itemDto, topicId, votingId, itemId);
+        addLinks(itemResource);
+        return new ResponseEntity<>(itemResource, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{itemId}", method = RequestMethod.DELETE)
+    public HttpStatus deleteAllItemsByTopicIdAndVotingId(@PathVariable Long topicId, @PathVariable Long votingId,
+                                                         @PathVariable Long itemId) {
+        itemProxyService.deleteByTopicIdAndVotingIdAndId(topicId, votingId, itemId);
+        return HttpStatus.NO_CONTENT;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
-    public HttpStatus deleteAllItemsByVotingId(@PathVariable Long votingId) {
-        itemProxyService.deleteAllByVotingId(votingId);
+    public HttpStatus deleteAllItemsByTopicIdAndVotingId(@PathVariable Long topicId, @PathVariable Long votingId) {
+        itemProxyService.deleteAllByTopicIdAndVotingId(topicId, votingId);
         return HttpStatus.NO_CONTENT;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public HttpEntity<List<ItemResource>> getAllItemsByVotingId(@PathVariable Long votingId) {
-        return new ResponseEntity<>(itemProxyService.getAllByVotingId(votingId), HttpStatus.OK);
+    public HttpEntity<List<ItemResource>> getAllItemsByTopicIdAndVotingId(@PathVariable Long topicId,
+                                                                          @PathVariable Long votingId) {
+        List<ItemResource> itemResources = itemProxyService.getAllByTopicIdAndVotingId(topicId, votingId);
+        itemResources.forEach(this::addLinks);
+        return new ResponseEntity<>(itemResources, HttpStatus.OK);
+    }
+
+    private void addLinks(ItemResource resource) {
+        itemLinkAssembly.addLinks(resource);
     }
 }

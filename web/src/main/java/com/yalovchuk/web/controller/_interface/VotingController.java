@@ -1,14 +1,23 @@
 package com.yalovchuk.web.controller._interface;
 
-import com.yalovchuk.bean.Voting;
 import com.yalovchuk.dto.VotingDto;
 import com.yalovchuk.resource.VotingResource;
-import com.yalovchuk.web.controller._interface.base.mixin.DeleteController;
-import com.yalovchuk.web.controller._interface.base.mixin.ReadController;
-import com.yalovchuk.web.controller._interface.base.mixin.UpdateController;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 
-public interface VotingController extends
-        ReadController<Voting, Long, VotingDto, VotingResource>,
-        UpdateController<Voting, Long, VotingDto, VotingResource>,
-        DeleteController<Voting, Long, VotingDto, VotingResource> {
+import java.util.List;
+
+public interface VotingController {
+
+    HttpEntity<VotingResource> createVotingByTopicId(VotingDto votingDto, Long topicId);
+
+    HttpEntity<VotingResource> readVotingByTopicIdAndId(Long topicId, Long votingId);
+
+    HttpEntity<VotingResource> updateVotingByTopicIdAndId(VotingDto votingDto, Long topicId, Long votingId);
+
+    HttpStatus deleteAllItemsByTopicId(Long topicId, Long votingId);
+
+    HttpStatus deleteAllVotingsByTopicId(Long topicId);
+
+    HttpEntity<List<VotingResource>> getAllVotingsByTopicId(Long topicId);
 }
