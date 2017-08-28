@@ -5,11 +5,12 @@ import com.yalovchuk.bean.Voting;
 import com.yalovchuk.dao.ItemDao;
 import com.yalovchuk.service.exception.ForbiddenException;
 import com.yalovchuk.service.exception.NotFoundException;
+import com.yalovchuk.service.exception.NotValidException;
 import com.yalovchuk.service.main._interface.ItemService;
 import com.yalovchuk.service.main._interface.VotingService;
 import com.yalovchuk.service.main.implementation.base.CrudServiceImpl;
 import com.yalovchuk.service.utility.validator._interface.ItemValidator;
-import com.yalovchuk.service.utility.validator._interface.base.NamedBeanValidator;
+import com.yalovchuk.service.utility.validator._interface.base.BeanValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
@@ -35,18 +36,20 @@ public class ItemServiceImpl extends CrudServiceImpl<Item, Long> implements Item
     }
 
     @Override
-    protected NamedBeanValidator<Item, Long> getValidator() {
+    protected BeanValidator<Item, Long> getValidator() {
         return itemValidator;
     }
 
     @Override
     public Item create(Item item) {
+        if (!itemValidator.validateName(item)) throw new NotValidException();
         item.setScore(0);
         return super.create(item);
     }
 
     @Override
     public Item update(Item newItem, Long id) {
+        if (!itemValidator.validateName(newItem)) throw new NotValidException();
         newItem.setScore(read(id).getScore());
         return super.update(newItem, id);
     }

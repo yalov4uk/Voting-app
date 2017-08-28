@@ -9,7 +9,7 @@ import com.yalovchuk.service.main._interface.TopicService;
 import com.yalovchuk.service.main._interface.VotingService;
 import com.yalovchuk.service.main.implementation.base.CrudServiceImpl;
 import com.yalovchuk.service.utility.validator._interface.VotingValidator;
-import com.yalovchuk.service.utility.validator._interface.base.NamedBeanValidator;
+import com.yalovchuk.service.utility.validator._interface.base.BeanValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
@@ -37,18 +37,20 @@ public class VotingServiceImpl extends CrudServiceImpl<Voting, Long> implements 
     }
 
     @Override
-    protected NamedBeanValidator<Voting, Long> getValidator() {
+    protected BeanValidator<Voting, Long> getValidator() {
         return votingValidator;
     }
 
     @Override
     public Voting create(Voting voting) {
+        if (!votingValidator.validateName(voting)) throw new NotValidException();
         voting.setEnable(false);
         return super.create(voting);
     }
 
     @Override
     public Voting update(Voting newVoting, Long id) {
+        if (!votingValidator.validateName(newVoting)) throw new NotValidException();
         newVoting.setEnable(false);
         return super.update(newVoting, id);
     }
