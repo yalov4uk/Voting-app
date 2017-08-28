@@ -14,17 +14,17 @@ import org.springframework.stereotype.Service;
 public class TopicServiceImpl extends CrudServiceImpl<Topic, Long> implements TopicService {
 
     @Autowired
-    protected TopicDao topicDao;
+    private TopicDao topicDao;
     @Autowired
-    protected TopicValidator topicValidator;
+    private TopicValidator topicValidator;
 
     protected CrudRepository<Topic, Long> getDao() {
         return topicDao;
     }
 
     @Override
-    protected void loadLists(Topic oldBean, Topic newBean) {
-        newBean.setVotings(oldBean.getVotings());
+    protected void loadLists(Topic oldTopic, Topic newTopic) {
+        newTopic.setVotings(oldTopic.getVotings());
     }
 
     @Override

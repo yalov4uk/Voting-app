@@ -27,6 +27,7 @@ public abstract class CrudControllerImpl<
 
     protected abstract LinkAssembly<T, K, R> getLinkAssembly();
 
+    @Override
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public HttpEntity<R> create(@RequestBody D beanDto) {
         R resource = getService().create(beanDto);
@@ -34,6 +35,7 @@ public abstract class CrudControllerImpl<
         return new ResponseEntity<>(resource, HttpStatus.CREATED);
     }
 
+    @Override
     @RequestMapping(value = "/{id}/", method = RequestMethod.GET)
     public HttpEntity<R> read(@PathVariable K id) {
         R resource = getService().read(id);
@@ -41,6 +43,7 @@ public abstract class CrudControllerImpl<
         return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
+    @Override
     @RequestMapping(value = "/{id}/", method = RequestMethod.PUT)
     public HttpEntity<R> update(@RequestBody D beanDto, @PathVariable K id) {
         R resource = getService().update(beanDto, id);
@@ -48,12 +51,21 @@ public abstract class CrudControllerImpl<
         return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
+    @Override
     @RequestMapping(value = "/{id}/", method = RequestMethod.DELETE)
     public HttpStatus delete(@PathVariable K id) {
         getService().delete(id);
         return HttpStatus.NO_CONTENT;
     }
 
+    @Override
+    @RequestMapping(value = "/", method = RequestMethod.DELETE)
+    public HttpStatus deleteAll() {
+        getService().deleteAll();
+        return HttpStatus.NO_CONTENT;
+    }
+
+    @Override
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public HttpEntity<List<R>> getAll() {
         List<R> resources = getService().getAll();

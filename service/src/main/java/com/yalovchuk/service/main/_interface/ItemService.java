@@ -19,5 +19,6 @@ public interface ItemService extends CrudService<Item, Long> {
 
     List<Item> getAllByTopicIdAndVotingId(Long topicId, Long votingId);
 
+
     void registerItem(Long topicId, Long votingId, Long itemId);
 }

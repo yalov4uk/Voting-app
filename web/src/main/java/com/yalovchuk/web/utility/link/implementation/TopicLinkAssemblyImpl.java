@@ -1,7 +1,6 @@
 package com.yalovchuk.web.utility.link.implementation;
 
 import com.yalovchuk.resource.TopicResource;
-import com.yalovchuk.web.controller._interface.TopicController;
 import com.yalovchuk.web.controller.implementation.TopicControllerImpl;
 import com.yalovchuk.web.utility.link._interface.TopicLinkAssembly;
 import org.springframework.stereotype.Service;

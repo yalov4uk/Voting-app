@@ -21,5 +21,6 @@ public interface ItemController {
 
     HttpEntity<List<ItemResource>> getAllItemsByTopicIdAndVotingId(Long topicId, Long votingId);
 
+
     HttpStatus registerItem(Long topicId, Long votingId, Long itemId);
 }

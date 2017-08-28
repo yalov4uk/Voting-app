@@ -21,5 +21,7 @@ public interface CrudProxyService<
 
     void delete(K id);
 
+    void deleteAll();
+
     List<R> getAll();
 }

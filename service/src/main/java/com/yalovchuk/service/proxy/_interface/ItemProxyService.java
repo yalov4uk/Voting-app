@@ -21,5 +21,6 @@ public interface ItemProxyService extends CrudProxyService<Item, Long, ItemDto, 
 
     List<ItemResource> getAllByTopicIdAndVotingId(Long topicId, Long votingId);
 
+
     void registerItem(Long topicId, Long votingId, Long itemId);
 }

@@ -7,11 +7,15 @@ import com.yalovchuk.service.utility.mapper._interface.base.Mapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class MapperImpl<T extends Bean<K>, K extends Number, D extends BeanDto<T, K>,
-        R extends BeanResource<T, K>> implements Mapper<T, K, D, R> {
+public abstract class MapperImpl<
+        T extends Bean<K>,
+        K extends Number,
+        D extends BeanDto<T, K>,
+        R extends BeanResource<T, K>
+        > implements Mapper<T, K, D, R> {
 
     @Autowired
-    protected ModelMapper modelMapper;
+    private ModelMapper modelMapper;
 
     protected abstract Class<T> getBeanClass();
 

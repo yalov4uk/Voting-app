@@ -28,7 +28,8 @@ public class ItemControllerImpl implements ItemController {
     private ItemLinkAssembly itemLinkAssembly;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public HttpEntity<ItemResource> createItemByTopicIdAndVotingId(@RequestBody ItemDto itemDto, @PathVariable Long topicId,
+    public HttpEntity<ItemResource> createItemByTopicIdAndVotingId(@RequestBody ItemDto itemDto,
+                                                                   @PathVariable Long topicId,
                                                                    @PathVariable Long votingId) {
         ItemResource itemResource = itemProxyService.createByTopicIdAndVotingId(itemDto, topicId, votingId);
         addLinks(itemResource);
@@ -45,7 +46,8 @@ public class ItemControllerImpl implements ItemController {
     }
 
     @RequestMapping(value = "/{itemId}/", method = RequestMethod.PUT)
-    public HttpEntity<ItemResource> updateItemByTopicIdAndVotingIdAndId(@RequestBody ItemDto itemDto, @PathVariable Long topicId,
+    public HttpEntity<ItemResource> updateItemByTopicIdAndVotingIdAndId(@RequestBody ItemDto itemDto,
+                                                                        @PathVariable Long topicId,
                                                                         @PathVariable Long votingId,
                                                                         @PathVariable Long itemId) {
         ItemResource itemResource = itemProxyService.updateByTopicIdAndVotingIdAndId(itemDto, topicId, votingId, itemId);

@@ -1,9 +1,9 @@
 package com.yalovchuk.service.utility.mapper.implementation;
 
 import com.yalovchuk.bean.Item;
-import com.yalovchuk.dao.VotingDao;
 import com.yalovchuk.dto.ItemDto;
 import com.yalovchuk.resource.ItemResource;
+import com.yalovchuk.service.main._interface.VotingService;
 import com.yalovchuk.service.utility.mapper._interface.ItemMapper;
 import com.yalovchuk.service.utility.mapper._interface.VotingMapper;
 import com.yalovchuk.service.utility.mapper.implementation.base.MapperImpl;
@@ -17,7 +17,7 @@ public class ItemMapperImpl extends MapperImpl<Item, Long, ItemDto, ItemResource
     private VotingMapper votingMapper;
 
     @Autowired
-    private VotingDao votingDao;
+    private VotingService votingService;
 
     @Override
     protected Class<Item> getBeanClass() {
@@ -32,14 +32,14 @@ public class ItemMapperImpl extends MapperImpl<Item, Long, ItemDto, ItemResource
     @Override
     public Item dtoToBean(ItemDto beanDto) {
         Item item = super.dtoToBean(beanDto);
-        if (beanDto.getVotingId() != null) item.setVoting(votingDao.findOne(beanDto.getVotingId()));
+        if (beanDto.getVotingId() != null) item.setVoting(votingService.read(beanDto.getVotingId()));
         return item;
     }
 
     @Override
     public ItemResource beanToResource(Item bean) {
         ItemResource itemResource = super.beanToResource(bean);
-        itemResource.setVoting(votingMapper.beanToResource(bean.getVoting()));
+        if (bean.getVoting() != null) itemResource.setVoting(votingMapper.beanToResource(bean.getVoting()));
         return itemResource;
     }
 }

@@ -1,9 +1,6 @@
 package com.yalovchuk.web.utility.link.implementation;
 
 import com.yalovchuk.resource.ItemResource;
-import com.yalovchuk.web.controller._interface.ItemController;
-import com.yalovchuk.web.controller._interface.TopicController;
-import com.yalovchuk.web.controller._interface.VotingController;
 import com.yalovchuk.web.controller.implementation.ItemControllerImpl;
 import com.yalovchuk.web.controller.implementation.TopicControllerImpl;
 import com.yalovchuk.web.controller.implementation.VotingControllerImpl;

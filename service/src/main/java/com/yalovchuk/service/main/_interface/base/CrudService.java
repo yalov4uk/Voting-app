@@ -14,5 +14,7 @@ public interface CrudService<T extends Bean<K>, K extends Number> {
 
     void delete(K id);
 
+    void deleteAll();
+
     List<T> getAll();
 }

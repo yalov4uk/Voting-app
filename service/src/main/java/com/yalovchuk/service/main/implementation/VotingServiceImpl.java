@@ -21,19 +21,19 @@ import java.util.Objects;
 public class VotingServiceImpl extends CrudServiceImpl<Voting, Long> implements VotingService {
 
     @Autowired
-    protected VotingDao votingDao;
+    private VotingDao votingDao;
     @Autowired
-    protected TopicService topicService;
+    private TopicService topicService;
     @Autowired
-    protected VotingValidator votingValidator;
+    private VotingValidator votingValidator;
 
     protected CrudRepository<Voting, Long> getDao() {
         return votingDao;
     }
 
     @Override
-    protected void loadLists(Voting oldBean, Voting newBean) {
-        newBean.setItems(oldBean.getItems());
+    protected void loadLists(Voting oldVoting, Voting newVoting) {
+        newVoting.setItems(oldVoting.getItems());
     }
 
     @Override
@@ -42,22 +42,15 @@ public class VotingServiceImpl extends CrudServiceImpl<Voting, Long> implements 
     }
 
     @Override
-    public Voting create(Voting bean) {
-        bean.setEnable(false);
-        return super.create(bean);
+    public Voting create(Voting voting) {
+        voting.setEnable(false);
+        return super.create(voting);
     }
 
     @Override
-    public Voting read(Long id) {
-        Voting voting = votingDao.findByIdAndEnableTrue(id);
-        if (voting == null) throw new NotFoundException();
-        return voting;
-    }
-
-    @Override
-    public Voting update(Voting newBean, Long id) {
-        newBean.setEnable(false);
-        return super.update(newBean, id);
+    public Voting update(Voting newVoting, Long id) {
+        newVoting.setEnable(false);
+        return super.update(newVoting, id);
     }
 
     @Override
@@ -69,9 +62,8 @@ public class VotingServiceImpl extends CrudServiceImpl<Voting, Long> implements 
 
     @Override
     public Voting readByTopicIdAndId(Long topicId, Long votingId) {
-        Voting voting = read(votingId);
-        if (voting.getTopic() == null || !Objects.equals(voting.getTopic().getId(), topicId))
-            throw new NotFoundException();
+        Voting voting = votingDao.readByTopicIdAndId(topicId, votingId);
+        if (voting == null) throw new NotFoundException();
         return voting;
     }
 
@@ -94,15 +86,14 @@ public class VotingServiceImpl extends CrudServiceImpl<Voting, Long> implements 
 
     @Override
     public List<Voting> getAllByTopicId(Long topicId) {
-        return votingDao.getAllByTopicIdAndEnableTrue(topicId);
+        return votingDao.getAllByTopicId(topicId);
     }
 
     @Override
     public Voting enableVoting(Boolean enable, Long topicId, Long votingId) {
         if (enable == null) throw new NotValidException();
         Voting voting = super.read(votingId);
-        if (voting.getTopic() == null || !Objects.equals(voting.getTopic().getId(), topicId))
-            throw new NotFoundException();
+        if (!Objects.equals(voting.getTopic().getId(), topicId)) throw new NotFoundException();
         voting.setEnable(enable);
         return voting;
     }

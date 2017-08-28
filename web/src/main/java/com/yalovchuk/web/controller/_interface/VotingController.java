@@ -21,5 +21,6 @@ public interface VotingController {
 
     HttpEntity<List<VotingResource>> getAllVotingsByTopicId(Long topicId);
 
+
     HttpEntity<VotingResource> enableVoting(Long topicId, Long votingId, Boolean enable);
 }

@@ -28,7 +28,8 @@ public class VotingControllerImpl implements VotingController {
     private VotingLinkAssembly votingLinkAssembly;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public HttpEntity<VotingResource> createVotingByTopicId(@RequestBody VotingDto votingDto, @PathVariable Long topicId) {
+    public HttpEntity<VotingResource> createVotingByTopicId(@RequestBody VotingDto votingDto,
+                                                            @PathVariable Long topicId) {
         VotingResource votingResource = votingProxyService.createByTopicId(votingDto, topicId);
         addLinks(votingResource);
         return new ResponseEntity<>(votingResource, HttpStatus.CREATED);
@@ -43,7 +44,8 @@ public class VotingControllerImpl implements VotingController {
     }
 
     @RequestMapping(value = "/{votingId}/", method = RequestMethod.PUT)
-    public HttpEntity<VotingResource> updateVotingByTopicIdAndId(@RequestBody VotingDto votingDto, @PathVariable Long topicId,
+    public HttpEntity<VotingResource> updateVotingByTopicIdAndId(@RequestBody VotingDto votingDto,
+                                                                 @PathVariable Long topicId,
                                                                  @PathVariable Long votingId) {
         VotingResource votingResource = votingProxyService.updateByTopicIdAndId(votingDto, topicId, votingId);
         addLinks(votingResource);

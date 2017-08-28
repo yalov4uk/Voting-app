@@ -7,5 +7,4 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class VotingValidatorImpl extends NamedBeanValidatorImpl<Voting, Long> implements VotingValidator {
-
 }

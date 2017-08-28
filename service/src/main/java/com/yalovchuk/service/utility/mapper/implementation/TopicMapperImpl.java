@@ -19,14 +19,4 @@ public class TopicMapperImpl extends MapperImpl<Topic, Long, TopicDto, TopicReso
     protected Class<TopicResource> getResourceClass() {
         return TopicResource.class;
     }
-
-    @Override
-    public Topic dtoToBean(TopicDto beanDto) {
-        return super.dtoToBean(beanDto);
-    }
-
-    @Override
-    public TopicResource beanToResource(Topic bean) {
-        return super.beanToResource(bean);
-    }
 }

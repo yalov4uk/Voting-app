@@ -3,6 +3,7 @@ package com.yalovchuk.service.main.implementation;
 import com.yalovchuk.bean.Item;
 import com.yalovchuk.bean.Voting;
 import com.yalovchuk.dao.ItemDao;
+import com.yalovchuk.service.exception.ForbiddenException;
 import com.yalovchuk.service.exception.NotFoundException;
 import com.yalovchuk.service.main._interface.ItemService;
 import com.yalovchuk.service.main._interface.VotingService;
@@ -14,24 +15,23 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class ItemServiceImpl extends CrudServiceImpl<Item, Long> implements ItemService {
 
     @Autowired
-    protected ItemDao itemDao;
+    private ItemDao itemDao;
     @Autowired
-    protected VotingService votingService;
+    private VotingService votingService;
     @Autowired
-    protected ItemValidator itemValidator;
+    private ItemValidator itemValidator;
 
     protected CrudRepository<Item, Long> getDao() {
         return itemDao;
     }
 
     @Override
-    protected void loadLists(Item oldBean, Item newBean) {
+    protected void loadLists(Item oldItem, Item newItem) {
     }
 
     @Override
@@ -40,22 +40,15 @@ public class ItemServiceImpl extends CrudServiceImpl<Item, Long> implements Item
     }
 
     @Override
-    public Item create(Item bean) {
-        bean.setScore(0);
-        return super.create(bean);
+    public Item create(Item item) {
+        item.setScore(0);
+        return super.create(item);
     }
 
     @Override
-    public Item read(Long id) {
-        Item item = itemDao.findByIdAndVotingEnableTrue(id);
-        if (item == null) throw new NotFoundException();
-        return item;
-    }
-
-    @Override
-    public Item update(Item newBean, Long id) {
-        newBean.setScore(itemDao.findOne(id).getScore());
-        return super.update(newBean, id);
+    public Item update(Item newItem, Long id) {
+        newItem.setScore(read(id).getScore());
+        return super.update(newItem, id);
     }
 
     @Override
@@ -67,11 +60,8 @@ public class ItemServiceImpl extends CrudServiceImpl<Item, Long> implements Item
 
     @Override
     public Item readByTopicIdAndVotingIdAndId(Long topicId, Long votingId, Long itemId) {
-        Item item = read(itemId);
-        if (item.getVoting() == null || !Objects.equals(item.getVoting().getId(), votingId)
-                || item.getVoting().getTopic() == null
-                || !Objects.equals(item.getVoting().getTopic().getId(), topicId))
-            throw new NotFoundException();
+        Item item = itemDao.readByVotingTopicIdAndVotingIdAndId(topicId, votingId, itemId);
+        if (item == null) throw new NotFoundException();
         return item;
     }
 
@@ -93,12 +83,13 @@ public class ItemServiceImpl extends CrudServiceImpl<Item, Long> implements Item
 
     @Override
     public List<Item> getAllByTopicIdAndVotingId(Long topicId, Long votingId) {
-        return itemDao.getAllByVotingTopicIdAndVotingIdAndVotingEnableTrue(topicId, votingId);
+        return itemDao.getAllByVotingTopicIdAndVotingId(topicId, votingId);
     }
 
     @Override
     public void registerItem(Long topicId, Long votingId, Long itemId) {
-        Item item = readByTopicIdAndVotingIdAndId(topicId, votingId, itemId);
+        Item item = itemDao.readByVotingTopicIdAndVotingIdAndIdAndVotingEnableTrue(topicId, votingId, itemId);
+        if (item == null) throw new ForbiddenException();
         item.incScore();
     }
 }

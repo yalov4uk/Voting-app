@@ -6,7 +6,7 @@ import com.yalovchuk.resource.ItemResource;
 import com.yalovchuk.service.main._interface.ItemService;
 import com.yalovchuk.service.main._interface.base.CrudService;
 import com.yalovchuk.service.proxy._interface.ItemProxyService;
-import com.yalovchuk.service.proxy.implementation.base.CrudProxyService;
+import com.yalovchuk.service.proxy.implementation.base.CrudProxyServiceImpl;
 import com.yalovchuk.service.utility.mapper._interface.ItemMapper;
 import com.yalovchuk.service.utility.mapper._interface.base.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +18,14 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class ItemProxyServiceImpl extends CrudProxyService<Item, Long, ItemDto, ItemResource>
+public class ItemProxyServiceImpl extends CrudProxyServiceImpl<Item, Long, ItemDto, ItemResource>
         implements ItemProxyService {
 
     @Autowired
-    protected ItemService itemService;
+    private ItemService itemService;
 
     @Autowired
-    protected ItemMapper itemMapper;
+    private ItemMapper itemMapper;
 
     @Override
     protected CrudService<Item, Long> getService() {

@@ -6,7 +6,7 @@ import com.yalovchuk.resource.TopicResource;
 import com.yalovchuk.service.main._interface.TopicService;
 import com.yalovchuk.service.main._interface.base.CrudService;
 import com.yalovchuk.service.proxy._interface.TopicProxyService;
-import com.yalovchuk.service.proxy.implementation.base.CrudProxyService;
+import com.yalovchuk.service.proxy.implementation.base.CrudProxyServiceImpl;
 import com.yalovchuk.service.utility.mapper._interface.TopicMapper;
 import com.yalovchuk.service.utility.mapper._interface.base.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class TopicProxyServiceImpl extends CrudProxyService<Topic, Long, TopicDto, TopicResource>
+public class TopicProxyServiceImpl extends CrudProxyServiceImpl<Topic, Long, TopicDto, TopicResource>
         implements TopicProxyService {
 
     @Autowired
-    protected TopicService topicService;
+    private TopicService topicService;
 
     @Autowired
-    protected TopicMapper topicMapper;
+    private TopicMapper topicMapper;
 
     @Override
     protected CrudService<Topic, Long> getService() {

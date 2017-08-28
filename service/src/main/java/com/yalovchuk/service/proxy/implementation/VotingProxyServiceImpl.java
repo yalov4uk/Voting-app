@@ -6,7 +6,7 @@ import com.yalovchuk.resource.VotingResource;
 import com.yalovchuk.service.main._interface.VotingService;
 import com.yalovchuk.service.main._interface.base.CrudService;
 import com.yalovchuk.service.proxy._interface.VotingProxyService;
-import com.yalovchuk.service.proxy.implementation.base.CrudProxyService;
+import com.yalovchuk.service.proxy.implementation.base.CrudProxyServiceImpl;
 import com.yalovchuk.service.utility.mapper._interface.VotingMapper;
 import com.yalovchuk.service.utility.mapper._interface.base.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class VotingProxyServiceImpl extends CrudProxyService<Voting, Long, VotingDto, VotingResource>
+public class VotingProxyServiceImpl extends CrudProxyServiceImpl<Voting, Long, VotingDto, VotingResource>
         implements VotingProxyService {
 
     @Autowired
-    protected VotingMapper votingMapper;
+    private VotingMapper votingMapper;
     @Autowired
     private VotingService votingService;
 

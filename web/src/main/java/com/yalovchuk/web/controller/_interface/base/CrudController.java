@@ -23,5 +23,7 @@ public interface CrudController<
 
     HttpStatus delete(K id);
 
+    HttpStatus deleteAll();
+
     HttpEntity<List<R>> getAll();
 }

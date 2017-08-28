@@ -19,5 +19,6 @@ public interface VotingService extends CrudService<Voting, Long> {
 
     List<Voting> getAllByTopicId(Long topicId);
 
+
     Voting enableVoting(Boolean Enable, Long topicId, Long votingId);
 }

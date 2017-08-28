@@ -21,5 +21,6 @@ public interface VotingProxyService extends CrudProxyService<Voting, Long, Votin
 
     List<VotingResource> getAllByTopicId(Long topicId);
 
+
     VotingResource enableVoting(Boolean enable, Long topicId, Long votingId);
 }

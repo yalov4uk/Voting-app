@@ -34,8 +34,7 @@ public abstract class CrudServiceImpl<T extends NamedBean<K>, K extends Number> 
     @Override
     public T update(T newBean, K id) {
         if (!getValidator().validateId(newBean) || !getValidator().validateName(newBean)) throw new NotValidException();
-        T oldBean = getDao().findOne(id);
-        if (oldBean == null) throw new NotFoundException();
+        T oldBean = read(id);
         loadLists(oldBean, newBean);
         newBean.setId(id);
         return getDao().save(newBean);
@@ -49,5 +48,10 @@ public abstract class CrudServiceImpl<T extends NamedBean<K>, K extends Number> 
     @Override
     public List<T> getAll() {
         return (List<T>) getDao().findAll();
+    }
+
+    @Override
+    public void deleteAll() {
+        getDao().deleteAll();
     }
 }
