@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(
-        value = "topics/{topicId}/votings/",
+        value = "api/v1/topics/{topicId}/votings",
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE
 )
@@ -27,7 +27,7 @@ public class VotingControllerImpl implements VotingController {
     @Autowired
     private VotingLinkAssembly votingLinkAssembly;
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public HttpEntity<VotingResource> createVotingByTopicId(@RequestBody VotingDto votingDto,
                                                             @PathVariable Long topicId) {
         VotingResource votingResource = votingProxyService.createByTopicId(votingDto, topicId);
@@ -35,7 +35,7 @@ public class VotingControllerImpl implements VotingController {
         return new ResponseEntity<>(votingResource, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/{votingId}/", method = RequestMethod.GET)
+    @RequestMapping(value = "/{votingId}", method = RequestMethod.GET)
     public HttpEntity<VotingResource> readVotingByTopicIdAndId(@PathVariable Long topicId,
                                                                @PathVariable Long votingId) {
         VotingResource votingResource = votingProxyService.readByTopicIdAndId(topicId, votingId);
@@ -43,7 +43,7 @@ public class VotingControllerImpl implements VotingController {
         return new ResponseEntity<>(votingResource, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{votingId}/", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{votingId}", method = RequestMethod.PUT)
     public HttpEntity<VotingResource> updateVotingByTopicIdAndId(@RequestBody VotingDto votingDto,
                                                                  @PathVariable Long topicId,
                                                                  @PathVariable Long votingId) {
@@ -52,28 +52,28 @@ public class VotingControllerImpl implements VotingController {
         return new ResponseEntity<>(votingResource, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{votingId}/", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{votingId}", method = RequestMethod.DELETE)
     public HttpStatus deleteAllItemsByTopicId(@PathVariable Long topicId, @PathVariable Long votingId) {
         votingProxyService.deleteByTopicIdAndId(topicId, votingId);
         return HttpStatus.NO_CONTENT;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE)
     public HttpStatus deleteAllVotingsByTopicId(@PathVariable Long topicId) {
         votingProxyService.deleteAllByTopicId(topicId);
         return HttpStatus.NO_CONTENT;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public HttpEntity<List<VotingResource>> getAllVotingsByTopicId(@PathVariable Long topicId) {
         List<VotingResource> votingResources = votingProxyService.getAllByTopicId(topicId);
         votingResources.forEach(this::addLinks);
         return new ResponseEntity<>(votingResources, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{votingId}/", method = RequestMethod.POST)
-    public HttpEntity<VotingResource> enableVoting(@PathVariable Long topicId, @PathVariable Long votingId,
-                                                   @RequestParam Boolean enable) {
+    @RequestMapping(value = "/{votingId}", method = RequestMethod.POST)
+    public HttpEntity<VotingResource> enableVoting(@RequestParam Boolean enable, @PathVariable Long topicId,
+                                                   @PathVariable Long votingId) {
         VotingResource votingResource = votingProxyService.enableVoting(enable, topicId, votingId);
         addLinks(votingResource);
         return new ResponseEntity<>(votingResource, HttpStatus.OK);

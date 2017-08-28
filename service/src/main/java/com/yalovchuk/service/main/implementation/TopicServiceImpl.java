@@ -2,6 +2,7 @@ package com.yalovchuk.service.main.implementation;
 
 import com.yalovchuk.bean.Topic;
 import com.yalovchuk.dao.TopicDao;
+import com.yalovchuk.service.exception.NotValidException;
 import com.yalovchuk.service.main._interface.TopicService;
 import com.yalovchuk.service.main.implementation.base.CrudServiceImpl;
 import com.yalovchuk.service.utility.validator._interface.TopicValidator;
@@ -30,5 +31,17 @@ public class TopicServiceImpl extends CrudServiceImpl<Topic, Long> implements To
     @Override
     protected BeanValidator<Topic, Long> getValidator() {
         return topicValidator;
+    }
+
+    @Override
+    public Topic create(Topic topic) {
+        if (!topicValidator.validateName(topic)) throw new NotValidException();
+        return super.create(topic);
+    }
+
+    @Override
+    public Topic update(Topic newTopic, Long id) {
+        if (!topicValidator.validateName(newTopic)) throw new NotValidException();
+        return super.update(newTopic, id);
     }
 }

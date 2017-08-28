@@ -8,6 +8,7 @@ import com.yalovchuk.web.controller._interface.base.CrudController;
 import com.yalovchuk.web.utility.link._interface.base.LinkAssembly;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +29,7 @@ public abstract class CrudControllerImpl<
     protected abstract LinkAssembly<T, K, R> getLinkAssembly();
 
     @Override
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public HttpEntity<R> create(@RequestBody D beanDto) {
         R resource = getService().create(beanDto);
         addLinks(resource);
@@ -36,7 +37,7 @@ public abstract class CrudControllerImpl<
     }
 
     @Override
-    @RequestMapping(value = "/{id}/", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public HttpEntity<R> read(@PathVariable K id) {
         R resource = getService().read(id);
         addLinks(resource);
@@ -44,7 +45,7 @@ public abstract class CrudControllerImpl<
     }
 
     @Override
-    @RequestMapping(value = "/{id}/", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public HttpEntity<R> update(@RequestBody D beanDto, @PathVariable K id) {
         R resource = getService().update(beanDto, id);
         addLinks(resource);
@@ -52,21 +53,21 @@ public abstract class CrudControllerImpl<
     }
 
     @Override
-    @RequestMapping(value = "/{id}/", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public HttpStatus delete(@PathVariable K id) {
         getService().delete(id);
         return HttpStatus.NO_CONTENT;
     }
 
     @Override
-    @RequestMapping(value = "/", method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE)
     public HttpStatus deleteAll() {
         getService().deleteAll();
         return HttpStatus.NO_CONTENT;
     }
 
     @Override
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public HttpEntity<List<R>> getAll() {
         List<R> resources = getService().getAll();
         resources.forEach(this::addLinks);

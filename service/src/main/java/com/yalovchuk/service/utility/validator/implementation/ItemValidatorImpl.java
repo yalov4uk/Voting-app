@@ -7,4 +7,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ItemValidatorImpl extends NamedBeanValidatorImpl<Item, Long> implements ItemValidator {
+
+    @Override
+    public boolean validateVoting(Item item) {
+        return item.getVoting() != null;
+    }
 }

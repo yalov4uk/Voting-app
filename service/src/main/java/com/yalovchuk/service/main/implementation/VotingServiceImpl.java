@@ -43,14 +43,16 @@ public class VotingServiceImpl extends CrudServiceImpl<Voting, Long> implements 
 
     @Override
     public Voting create(Voting voting) {
-        if (!votingValidator.validateName(voting)) throw new NotValidException();
+        if (!votingValidator.validateName(voting) || !votingValidator.validateTopic(voting))
+            throw new NotValidException();
         voting.setEnable(false);
         return super.create(voting);
     }
 
     @Override
     public Voting update(Voting newVoting, Long id) {
-        if (!votingValidator.validateName(newVoting)) throw new NotValidException();
+        if (!votingValidator.validateName(newVoting) || !votingValidator.validateTopic(newVoting))
+            throw new NotValidException();
         newVoting.setEnable(false);
         return super.update(newVoting, id);
     }
@@ -71,7 +73,8 @@ public class VotingServiceImpl extends CrudServiceImpl<Voting, Long> implements 
 
     @Override
     public Voting updateByTopicIdAndId(Voting newVoting, Long topicId, Long votingId) {
-        readByTopicIdAndId(topicId, votingId);
+        Voting oldVoting = readByTopicIdAndId(topicId, votingId);
+        if (newVoting.getTopic() == null) newVoting.setTopic(oldVoting.getTopic());
         return update(newVoting, votingId);
     }
 

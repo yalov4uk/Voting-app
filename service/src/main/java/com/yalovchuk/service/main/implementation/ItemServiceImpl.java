@@ -42,14 +42,15 @@ public class ItemServiceImpl extends CrudServiceImpl<Item, Long> implements Item
 
     @Override
     public Item create(Item item) {
-        if (!itemValidator.validateName(item)) throw new NotValidException();
+        if (!itemValidator.validateName(item) || !itemValidator.validateVoting(item)) throw new NotValidException();
         item.setScore(0);
         return super.create(item);
     }
 
     @Override
     public Item update(Item newItem, Long id) {
-        if (!itemValidator.validateName(newItem)) throw new NotValidException();
+        if (!itemValidator.validateName(newItem) || !itemValidator.validateVoting(newItem))
+            throw new NotValidException();
         newItem.setScore(read(id).getScore());
         return super.update(newItem, id);
     }
@@ -70,7 +71,8 @@ public class ItemServiceImpl extends CrudServiceImpl<Item, Long> implements Item
 
     @Override
     public Item updateByTopicIdAndVotingIdAndId(Item newItem, Long topicId, Long votingId, Long itemId) {
-        readByTopicIdAndVotingIdAndId(topicId, votingId, itemId);
+        Item oldItem = readByTopicIdAndVotingIdAndId(topicId, votingId, itemId);
+        if (newItem.getVoting() == null) newItem.setVoting(oldItem.getVoting());
         return update(newItem, votingId);
     }
 
