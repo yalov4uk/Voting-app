@@ -7,9 +7,9 @@
     java -jar core/target/core-1.0-SNAPSHOT.jar
 ```
 
-###**Method, Url, Description**
+### Method, Url, Description
 
-####Topic
+#### Topic
 
 _Post_, `api/v1/topics`, create
 
@@ -23,7 +23,7 @@ _Delete_, `api/v1/topics`, delete all
 
 _Get_, `api/v1/topics`, get all
 
-####Voting
+#### Voting
 
 _Post_, `api/v1/topics/{topicId}/votings`, create
 
@@ -39,7 +39,7 @@ _Get_, `api/v1/topics/{topicId}/votings`, get all
 
 _Post_, `api/v1/topics/{topicId}/votings/{votingId}?enable=boolean`, start/close voting
 
-####Item
+#### Item
 
 _Post_, `api/v1/topics/{topicId}/votings/{votingId}/items`, create
 
@@ -53,4 +53,4 @@ _Delete_, `api/v1/topics/{topicId}/votings/{votingId}/items`, delete all
 
 _Get_, `api/v1/topics/{topicId}/votings/{votingId}/items`, get all
 
-_Post_, `api/v1/topics/{topicId}/votings/{votingId}/items{itemId}`, vote for item
+_Post_, `api/v1/topics/{topicId}/votings/{votingId}/items/{itemId}`, vote for item
