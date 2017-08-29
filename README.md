@@ -4,7 +4,13 @@
 
 ```
     mvn clean install
-    java -jar core/target/core-1.0-SNAPSHOT.jar
+    java -jar core/target/VotingApp.jar
+```
+or
+```
+    mvn clean install
+    cd core/
+    mvn spring-boot:run
 ```
 
 ### Method, Url, Description
@@ -23,6 +29,13 @@ _Delete_, `api/v1/topics`, delete all
 
 _Get_, `api/v1/topics`, get all
 
+##### Body example:
+```
+{
+    "name": "topic"
+}
+```
+
 #### Voting
 
 _Post_, `api/v1/topics/{topicId}/votings`, create
@@ -39,6 +52,14 @@ _Get_, `api/v1/topics/{topicId}/votings`, get all
 
 _Post_, `api/v1/topics/{topicId}/votings/{votingId}?enable=boolean`, start/close voting
 
+##### Body example:
+```
+{
+    "name": "voting",
+    "topicId": 1
+}
+```
+
 #### Item
 
 _Post_, `api/v1/topics/{topicId}/votings/{votingId}/items`, create
@@ -54,3 +75,11 @@ _Delete_, `api/v1/topics/{topicId}/votings/{votingId}/items`, delete all
 _Get_, `api/v1/topics/{topicId}/votings/{votingId}/items`, get all
 
 _Post_, `api/v1/topics/{topicId}/votings/{votingId}/items/{itemId}`, vote for item
+
+##### Body example:
+```
+{
+    "name": "item",
+    "votingId": 1
+}
+```
