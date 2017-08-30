@@ -1,10 +1,10 @@
-FROM openjdk:8-jdk-alpine
+FROM java:8
 
-WORKDIR /app
+WORKDIR /backend
 
 VOLUME /tmp
 
-ADD core/target/VotingApp.jar app.jar
+ADD ../core/target/VotingApp.jar app.jar
 
 ENV JAVA_OPTS=""
 

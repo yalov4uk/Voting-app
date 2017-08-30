@@ -1,20 +1,35 @@
 version: "3"
+
 services:
-  web:
-    build:
-      ../.
-    links:
-      - mysql
-    ports:
-      - "8080:8080"
+
+  backend:
+    image: yalov4uk/votingapp:backend
+    container_name: voting_backend
     networks:
-      - webnet
-  mysql:
-    build:
-      sql/.
+      - voting_network
+    depends_on:
+      - db
     ports:
-      - "3307:3307"
+      - "8081:8080"
+
+  db:
+    image: mysql
+    container_name: voting_mysql
+    ports:
+      - "3307:3306"
     networks:
-      - webnet
+      - voting_network
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: voting_app
+    volumes:
+      - voting_mysql_data:/mysql/data
+      - ./db/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+
+volumes:
+  voting_mysql_data:
+    driver: local
+
 networks:
-  webnet:
+  voting_network:
+    driver: bridge
