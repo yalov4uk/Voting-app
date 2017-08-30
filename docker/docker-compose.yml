@@ -3,7 +3,7 @@ version: "3"
 services:
 
   backend:
-    image: yalov4uk/votingapp:backend
+    image: yalov4uk/votingapp:backend3
     container_name: voting_backend
     networks:
       - voting_network

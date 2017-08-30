@@ -1,16 +1,10 @@
 # VotingApp
 
-### Fast launch
-
+### Fast launch (3 ways)
+Environment: docker v17.03, docker-compose v1.16.0-rc2
 ```
-    mvn clean install
-    java -jar core/target/VotingApp.jar
-```
-or
-```
-    mvn clean install
-    cd core/
-    mvn spring-boot:run
+    cd docker
+    docker-compose up
 ```
 
 ### Method, Url, Description
