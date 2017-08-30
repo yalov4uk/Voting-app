@@ -1,6 +1,6 @@
 # VotingApp
 
-### Fast launch (3 ways)
+### Fast launch
 Environment: docker v17.03, docker-compose v1.16.0-rc2
 ```
     cd docker
