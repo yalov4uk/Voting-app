@@ -13,9 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class ItemProxyServiceImpl extends CrudProxyServiceImpl<Item, Long, ItemDto, ItemResource>
@@ -23,7 +20,6 @@ public class ItemProxyServiceImpl extends CrudProxyServiceImpl<Item, Long, ItemD
 
     @Autowired
     private ItemService itemService;
-
     @Autowired
     private ItemMapper itemMapper;
 
@@ -38,43 +34,7 @@ public class ItemProxyServiceImpl extends CrudProxyServiceImpl<Item, Long, ItemD
     }
 
     @Override
-    public ItemResource createByTopicIdAndVotingId(ItemDto itemDto, Long topicId, Long votingId) {
-        Item item = itemMapper.dtoToBean(itemDto);
-        item = itemService.createByTopicIdAndVotingId(item, topicId, votingId);
-        return itemMapper.beanToResource(item);
-    }
-
-    @Override
-    public ItemResource readByTopicIdAndVotingIdAndId(Long topicId, Long votingId, Long itemId) {
-        Item item = itemService.readByTopicIdAndVotingIdAndId(topicId, votingId, itemId);
-        return itemMapper.beanToResource(item);
-    }
-
-    @Override
-    public ItemResource updateByTopicIdAndVotingIdAndId(ItemDto itemDto, Long topicId, Long votingId, Long itemId) {
-        Item item = itemMapper.dtoToBean(itemDto);
-        item = itemService.updateByTopicIdAndVotingIdAndId(item, topicId, votingId, itemId);
-        return itemMapper.beanToResource(item);
-    }
-
-    @Override
-    public void deleteByTopicIdAndVotingIdAndId(Long topicId, Long votingId, Long itemId) {
-        itemService.deleteByTopicIdAndVotingIdAndId(topicId, votingId, itemId);
-    }
-
-    @Override
-    public void deleteAllByTopicIdAndVotingId(Long topicId, Long votingId) {
-        itemService.deleteAllByTopicIdAndVotingId(topicId, votingId);
-    }
-
-    @Override
-    public List<ItemResource> getAllByTopicIdAndVotingId(Long topicId, Long votingId) {
-        List<Item> items = itemService.getAllByTopicIdAndVotingId(topicId, votingId);
-        return items.stream().map(this.itemMapper::beanToResource).collect(Collectors.toList());
-    }
-
-    @Override
-    public void registerItem(Long topicId, Long votingId, Long itemId) {
-        itemService.registerItem(topicId, votingId, itemId);
+    public void registerItem(Long itemId) {
+        itemService.registerItem(itemId);
     }
 }

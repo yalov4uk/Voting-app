@@ -1,9 +1,9 @@
 package com.yalovchuk.web.utility.link.implementation;
 
 import com.yalovchuk.resource.VotingResource;
-import com.yalovchuk.web.controller.implementation.ItemControllerImpl;
 import com.yalovchuk.web.controller.implementation.TopicControllerImpl;
 import com.yalovchuk.web.controller.implementation.VotingControllerImpl;
+import com.yalovchuk.web.controller.implementation.nested.ItemNestedControllerImpl;
 import com.yalovchuk.web.utility.link._interface.TopicLinkAssembly;
 import com.yalovchuk.web.utility.link._interface.VotingLinkAssembly;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +23,9 @@ public class VotingLinkAssemblyImpl implements VotingLinkAssembly {
         Long votingId = resource.getPk();
         Long topicId = resource.getTopic().getPk();
         resource.add(
-                linkTo(methodOn(VotingControllerImpl.class).readVotingByTopicIdAndId(topicId, votingId)).withSelfRel(),
+                linkTo(methodOn(VotingControllerImpl.class).read(votingId)).withSelfRel(),
                 linkTo(methodOn(TopicControllerImpl.class).read(topicId)).withRel("topic"),
-                linkTo(methodOn(ItemControllerImpl.class).getAllItemsByTopicIdAndVotingId(topicId, votingId))
+                linkTo(methodOn(ItemNestedControllerImpl.class).getAllItemsByTopicIdAndVotingId(topicId, votingId))
                         .withRel("items")
         );
         topicLinkAssembly.addLinks(resource.getTopic());
