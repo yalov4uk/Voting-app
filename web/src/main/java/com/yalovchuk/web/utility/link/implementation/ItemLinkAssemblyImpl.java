@@ -24,10 +24,8 @@ public class ItemLinkAssemblyImpl implements ItemLinkAssembly {
         Long votingId = resource.getVoting().getPk();
         Long topicId = resource.getVoting().getTopic().getPk();
         resource.add(
-                linkTo(methodOn(ItemControllerImpl.class).readItemByTopicIdAndVotingIdAndId(topicId, votingId, itemId))
-                        .withSelfRel(),
-                linkTo(methodOn(VotingControllerImpl.class).readVotingByTopicIdAndId(topicId, votingId))
-                        .withRel("voting"),
+                linkTo(methodOn(ItemControllerImpl.class).read(itemId)).withSelfRel(),
+                linkTo(methodOn(VotingControllerImpl.class).read(votingId)).withRel("voting"),
                 linkTo(methodOn(TopicControllerImpl.class).read(topicId)).withRel("topic")
         );
         votingLinkAssembly.addLinks(resource.getVoting());

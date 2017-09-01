@@ -13,18 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class VotingProxyServiceImpl extends CrudProxyServiceImpl<Voting, Long, VotingDto, VotingResource>
         implements VotingProxyService {
 
     @Autowired
-    private VotingMapper votingMapper;
-    @Autowired
     private VotingService votingService;
+    @Autowired
+    private VotingMapper votingMapper;
 
     @Override
     protected CrudService<Voting, Long> getService() {
@@ -37,44 +34,8 @@ public class VotingProxyServiceImpl extends CrudProxyServiceImpl<Voting, Long, V
     }
 
     @Override
-    public VotingResource createByTopicId(VotingDto votingDto, Long topicId) {
-        Voting voting = votingMapper.dtoToBean(votingDto);
-        voting = votingService.createByTopicId(voting, topicId);
-        return votingMapper.beanToResource(voting);
-    }
-
-    @Override
-    public VotingResource readByTopicIdAndId(Long topicId, Long votingId) {
-        Voting voting = votingService.readByTopicIdAndId(topicId, votingId);
-        return votingMapper.beanToResource(voting);
-    }
-
-    @Override
-    public VotingResource updateByTopicIdAndId(VotingDto votingDto, Long topicId, Long votingId) {
-        Voting voting = votingMapper.dtoToBean(votingDto);
-        voting = votingService.updateByTopicIdAndId(voting, topicId, votingId);
-        return votingMapper.beanToResource(voting);
-    }
-
-    @Override
-    public void deleteByTopicIdAndId(Long topicId, Long votingId) {
-        votingService.deleteByTopicIdAndId(topicId, votingId);
-    }
-
-    @Override
-    public void deleteAllByTopicId(Long topicId) {
-        votingService.deleteAllByTopicId(topicId);
-    }
-
-    @Override
-    public List<VotingResource> getAllByTopicId(Long topicId) {
-        List<Voting> votings = votingService.getAllByTopicId(topicId);
-        return votings.stream().map(votingMapper::beanToResource).collect(Collectors.toList());
-    }
-
-    @Override
-    public VotingResource enableVoting(Boolean enable, Long topicId, Long votingId) {
-        Voting voting = votingService.enableVoting(enable, topicId, votingId);
+    public VotingResource enableVoting(Boolean enable, Long votingId) {
+        Voting voting = votingService.enableVoting(enable, votingId);
         return votingMapper.beanToResource(voting);
     }
 }

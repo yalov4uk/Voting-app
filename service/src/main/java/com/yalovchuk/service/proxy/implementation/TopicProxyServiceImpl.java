@@ -20,7 +20,6 @@ public class TopicProxyServiceImpl extends CrudProxyServiceImpl<Topic, Long, Top
 
     @Autowired
     private TopicService topicService;
-
     @Autowired
     private TopicMapper topicMapper;
 

@@ -8,6 +8,7 @@ import com.yalovchuk.service.utility.validator._interface.base.BeanValidator;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class CrudServiceImpl<T extends Bean<K>, K extends Number> implements CrudService<T, K> {
 
@@ -27,7 +28,7 @@ public abstract class CrudServiceImpl<T extends Bean<K>, K extends Number> imple
     @Override
     public T read(K id) {
         T bean = getDao().findOne(id);
-        if (bean == null) throw new NotFoundException();
+        if (Objects.isNull(bean)) throw new NotFoundException();
         return bean;
     }
 
