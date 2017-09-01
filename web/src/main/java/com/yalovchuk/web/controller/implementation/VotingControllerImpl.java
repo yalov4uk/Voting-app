@@ -1,10 +1,14 @@
 package com.yalovchuk.web.controller.implementation;
 
+import com.yalovchuk.bean.Voting;
 import com.yalovchuk.dto.VotingDto;
 import com.yalovchuk.resource.VotingResource;
 import com.yalovchuk.service.proxy._interface.VotingProxyService;
+import com.yalovchuk.service.proxy._interface.base.CrudProxyService;
 import com.yalovchuk.web.controller._interface.VotingController;
+import com.yalovchuk.web.controller.implementation.base.CrudControllerImpl;
 import com.yalovchuk.web.utility.link._interface.VotingLinkAssembly;
+import com.yalovchuk.web.utility.link._interface.base.LinkAssembly;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -16,70 +20,32 @@ import java.util.List;
 
 @RestController
 @RequestMapping(
-        value = "api/v1/topics/{topicId}/votings",
+        value = "api/v1/votings",
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE
 )
-public class VotingControllerImpl implements VotingController {
+public class VotingControllerImpl extends CrudControllerImpl<Voting, Long, VotingDto, VotingResource>
+        implements VotingController {
 
     @Autowired
     private VotingProxyService votingProxyService;
     @Autowired
     private VotingLinkAssembly votingLinkAssembly;
 
-    @RequestMapping(method = RequestMethod.POST)
-    public HttpEntity<VotingResource> createVotingByTopicId(@RequestBody VotingDto votingDto,
-                                                            @PathVariable Long topicId) {
-        VotingResource votingResource = votingProxyService.createByTopicId(votingDto, topicId);
-        addLinks(votingResource);
-        return new ResponseEntity<>(votingResource, HttpStatus.CREATED);
+    @Override
+    protected CrudProxyService<Voting, Long, VotingDto, VotingResource> getService() {
+        return votingProxyService;
     }
 
-    @RequestMapping(value = "/{votingId}", method = RequestMethod.GET)
-    public HttpEntity<VotingResource> readVotingByTopicIdAndId(@PathVariable Long topicId,
-                                                               @PathVariable Long votingId) {
-        VotingResource votingResource = votingProxyService.readByTopicIdAndId(topicId, votingId);
-        addLinks(votingResource);
-        return new ResponseEntity<>(votingResource, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/{votingId}", method = RequestMethod.PUT)
-    public HttpEntity<VotingResource> updateVotingByTopicIdAndId(@RequestBody VotingDto votingDto,
-                                                                 @PathVariable Long topicId,
-                                                                 @PathVariable Long votingId) {
-        VotingResource votingResource = votingProxyService.updateByTopicIdAndId(votingDto, topicId, votingId);
-        addLinks(votingResource);
-        return new ResponseEntity<>(votingResource, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/{votingId}", method = RequestMethod.DELETE)
-    public HttpStatus deleteAllItemsByTopicId(@PathVariable Long topicId, @PathVariable Long votingId) {
-        votingProxyService.deleteByTopicIdAndId(topicId, votingId);
-        return HttpStatus.NO_CONTENT;
-    }
-
-    @RequestMapping(method = RequestMethod.DELETE)
-    public HttpStatus deleteAllVotingsByTopicId(@PathVariable Long topicId) {
-        votingProxyService.deleteAllByTopicId(topicId);
-        return HttpStatus.NO_CONTENT;
-    }
-
-    @RequestMapping(method = RequestMethod.GET)
-    public HttpEntity<List<VotingResource>> getAllVotingsByTopicId(@PathVariable Long topicId) {
-        List<VotingResource> votingResources = votingProxyService.getAllByTopicId(topicId);
-        votingResources.forEach(this::addLinks);
-        return new ResponseEntity<>(votingResources, HttpStatus.OK);
+    @Override
+    protected LinkAssembly<Voting, Long, VotingResource> getLinkAssembly() {
+        return votingLinkAssembly;
     }
 
     @RequestMapping(value = "/{votingId}", method = RequestMethod.POST)
-    public HttpEntity<VotingResource> enableVoting(@RequestParam Boolean enable, @PathVariable Long topicId,
-                                                   @PathVariable Long votingId) {
-        VotingResource votingResource = votingProxyService.enableVoting(enable, topicId, votingId);
+    public HttpEntity<VotingResource> enableVoting(@RequestParam Boolean enable, @PathVariable Long votingId) {
+        VotingResource votingResource = votingProxyService.enableVoting(enable, votingId);
         addLinks(votingResource);
         return new ResponseEntity<>(votingResource, HttpStatus.OK);
-    }
-
-    private void addLinks(VotingResource resource) {
-        votingLinkAssembly.addLinks(resource);
     }
 }

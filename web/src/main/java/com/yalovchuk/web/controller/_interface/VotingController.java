@@ -1,26 +1,18 @@
 package com.yalovchuk.web.controller._interface;
 
+import com.yalovchuk.bean.Topic;
+import com.yalovchuk.bean.Voting;
+import com.yalovchuk.dto.TopicDto;
 import com.yalovchuk.dto.VotingDto;
+import com.yalovchuk.resource.TopicResource;
 import com.yalovchuk.resource.VotingResource;
+import com.yalovchuk.web.controller._interface.base.CrudController;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
-public interface VotingController {
+public interface VotingController extends CrudController<Voting, Long, VotingDto, VotingResource> {
 
-    HttpEntity<VotingResource> createVotingByTopicId(VotingDto votingDto, Long topicId);
-
-    HttpEntity<VotingResource> readVotingByTopicIdAndId(Long topicId, Long votingId);
-
-    HttpEntity<VotingResource> updateVotingByTopicIdAndId(VotingDto votingDto, Long topicId, Long votingId);
-
-    HttpStatus deleteAllItemsByTopicId(Long topicId, Long votingId);
-
-    HttpStatus deleteAllVotingsByTopicId(Long topicId);
-
-    HttpEntity<List<VotingResource>> getAllVotingsByTopicId(Long topicId);
-
-
-    HttpEntity<VotingResource> enableVoting(Boolean enable, Long topicId, Long votingId);
+    HttpEntity<VotingResource> enableVoting(Boolean enable, Long votingId);
 }
