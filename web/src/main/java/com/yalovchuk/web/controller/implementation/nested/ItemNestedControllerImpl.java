@@ -2,7 +2,7 @@ package com.yalovchuk.web.controller.implementation.nested;
 
 import com.yalovchuk.dto.ItemDto;
 import com.yalovchuk.resource.ItemResource;
-import com.yalovchuk.service.proxy._interface.ItemProxyService;
+import com.yalovchuk.service.proxy._interface.nested.ItemProxyNestedService;
 import com.yalovchuk.web.controller._interface.nested.ItemNestedController;
 import com.yalovchuk.web.utility.link._interface.ItemLinkAssembly;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,29 +23,29 @@ import java.util.List;
 public class ItemNestedControllerImpl implements ItemNestedController {
 
     @Autowired
-    private ItemProxyService itemProxyService;
+    private ItemProxyNestedService itemProxyNestedService;
     @Autowired
     private ItemLinkAssembly itemLinkAssembly;
 
-    @RequestMapping(value = "/topics/{topicId}/votings/{votingId}/items", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public HttpEntity<ItemResource> createItemByTopicIdAndVotingId(@RequestBody ItemDto itemDto,
                                                                    @PathVariable Long topicId,
                                                                    @PathVariable Long votingId) {
-        ItemResource itemResource = itemProxyService.createByTopicIdAndVotingId(itemDto, topicId, votingId);
+        ItemResource itemResource = itemProxyNestedService.createByTopicIdAndVotingId(itemDto, topicId, votingId);
         itemLinkAssembly.addLinks(itemResource);
         return new ResponseEntity<>(itemResource, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/topics/{topicId}/votings/{votingId}/items", method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE)
     public HttpStatus deleteAllItemsByTopicIdAndVotingId(@PathVariable Long topicId, @PathVariable Long votingId) {
-        itemProxyService.deleteAllByTopicIdAndVotingId(topicId, votingId);
+        itemProxyNestedService.deleteAllByTopicIdAndVotingId(topicId, votingId);
         return HttpStatus.NO_CONTENT;
     }
 
-    @RequestMapping(value = "/topics/{topicId}/votings/{votingId}/items", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public HttpEntity<List<ItemResource>> getAllItemsByTopicIdAndVotingId(@PathVariable Long topicId,
                                                                           @PathVariable Long votingId) {
-        List<ItemResource> itemResources = itemProxyService.getAllByTopicIdAndVotingId(topicId, votingId);
+        List<ItemResource> itemResources = itemProxyNestedService.getAllByTopicIdAndVotingId(topicId, votingId);
         itemResources.forEach(itemLinkAssembly::addLinks);
         return new ResponseEntity<>(itemResources, HttpStatus.OK);
     }

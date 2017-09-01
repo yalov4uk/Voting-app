@@ -9,8 +9,6 @@ public interface VotingDao extends CrudRepository<Voting, Long> {
 
     Voting readByTopicIdAndId(Long topicId, Long votingId);
 
-    void deleteByTopicIdAndId(Long topicId, Long votingId);
-
     void deleteAllByTopicId(Long topicId);
 
     List<Voting> getAllByTopicId(Long topicId);

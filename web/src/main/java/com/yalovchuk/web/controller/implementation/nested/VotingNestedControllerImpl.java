@@ -2,7 +2,7 @@ package com.yalovchuk.web.controller.implementation.nested;
 
 import com.yalovchuk.dto.VotingDto;
 import com.yalovchuk.resource.VotingResource;
-import com.yalovchuk.service.proxy._interface.VotingProxyService;
+import com.yalovchuk.service.proxy._interface.nested.VotingProxyNestedService;
 import com.yalovchuk.web.controller._interface.nested.VotingNestedController;
 import com.yalovchuk.web.utility.link._interface.VotingLinkAssembly;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,27 +23,27 @@ import java.util.List;
 public class VotingNestedControllerImpl implements VotingNestedController {
 
     @Autowired
-    private VotingProxyService votingProxyService;
+    private VotingProxyNestedService votingProxyNestedService;
     @Autowired
     private VotingLinkAssembly votingLinkAssembly;
 
-    @RequestMapping(value = "/topics/{topicId}/votings", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public HttpEntity<VotingResource> createVotingByTopicId(@RequestBody VotingDto votingDto,
                                                             @PathVariable Long topicId) {
-        VotingResource votingResource = votingProxyService.createByTopicId(votingDto, topicId);
+        VotingResource votingResource = votingProxyNestedService.createByTopicId(votingDto, topicId);
         votingLinkAssembly.addLinks(votingResource);
         return new ResponseEntity<>(votingResource, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/topics/{topicId}/votings/{votingId}", method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE)
     public HttpStatus deleteAllVotingsByTopicId(@PathVariable Long topicId) {
-        votingProxyService.deleteAllByTopicId(topicId);
+        votingProxyNestedService.deleteAllByTopicId(topicId);
         return HttpStatus.NO_CONTENT;
     }
 
-    @RequestMapping(value = "/topics/{topicId}/votings", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public HttpEntity<List<VotingResource>> getAllVotingsByTopicId(@PathVariable Long topicId) {
-        List<VotingResource> votingResources = votingProxyService.getAllByTopicId(topicId);
+        List<VotingResource> votingResources = votingProxyNestedService.getAllByTopicId(topicId);
         votingResources.forEach(votingLinkAssembly::addLinks);
         return new ResponseEntity<>(votingResources, HttpStatus.OK);
     }

@@ -6,22 +6,20 @@ import com.yalovchuk.resource.ItemResource;
 import com.yalovchuk.service.proxy._interface.ItemProxyService;
 import com.yalovchuk.service.proxy._interface.base.CrudProxyService;
 import com.yalovchuk.web.controller._interface.ItemController;
-import com.yalovchuk.web.controller._interface.base.CrudController;
 import com.yalovchuk.web.controller.implementation.base.CrudControllerImpl;
 import com.yalovchuk.web.utility.link._interface.ItemLinkAssembly;
 import com.yalovchuk.web.utility.link._interface.base.LinkAssembly;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(
-        value = "api/v1/topics/{topicId}/votings/{votingId}/items",
+        value = "api/v1/items",
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE
 )
