@@ -7,6 +7,8 @@ Environment: docker v17.03, docker-compose v1.16.0-rc2
     docker-compose up
 ```
 
+Server starts at port 8081
+
 ### Method, Url, Description
 
 #### Topic
@@ -19,11 +21,11 @@ _Put_, `api/v1/topics/{topicId}`, update
 
 _Delete_, `api/v1/topics/{topicId}`, delete
 
-_Delete_, `api/v1/topics`, delete all
-
 _Get_, `api/v1/topics`, get all
 
-##### Body example:
+_Delete_, `api/v1/topics`, delete all
+
+##### Request body example:
 ```
 {
     "name": "topic"
@@ -32,21 +34,27 @@ _Get_, `api/v1/topics`, get all
 
 #### Voting
 
-_Post_, `api/v1/topics/{topicId}/votings`, create
+_Post_, `api/v1/votings`, create
 
-_Get_, `api/v1/topics/{topicId}/votings/{votingId}`, read
+_Get_, `api/v1/votings/{votingId}`, read
 
-_Put_, `api/v1/topics/{topicId}/votings/{votingId}`, update
+_Put_, `api/v1/votings/{votingId}`, update
 
-_Delete_, `api/v1/topics/{topicId}/votings/{votingId}`, delete
+_Delete_, `api/v1/votings/{votingId}`, delete
 
-_Delete_, `api/v1/topics/{topicId}/votings`, delete all
+_Get_, `api/v1/votings`, get all
 
-_Get_, `api/v1/topics/{topicId}/votings`, get all
+_Delete_, `api/v1/votings`, delete all
 
-_Post_, `api/v1/topics/{topicId}/votings/{votingId}?enable=boolean`, start/close voting
+_Post_, `api/v1/topics/{topicId}/votings`, create by topicId
 
-##### Body example:
+_Get_, `api/v1/topics/{topicId}/votings`, get all by topicId
+
+_Delete_, `api/v1/topics/{topicId}/votings`, delete all by topicId
+
+_Post_, `api/v1/votings/{votingId}?enable=boolean`, start/close voting
+
+##### Request body example:
 ```
 {
     "name": "voting",
@@ -56,21 +64,27 @@ _Post_, `api/v1/topics/{topicId}/votings/{votingId}?enable=boolean`, start/close
 
 #### Item
 
-_Post_, `api/v1/topics/{topicId}/votings/{votingId}/items`, create
+_Post_, `api/v1/items`, create
 
-_Get_, `api/v1/topics/{topicId}/votings/{votingId}/items/{itemId}`, read
+_Get_, `api/v1/items/{itemId}`, read
 
-_Put_, `api/v1/topics/{topicId}/votings/{votingId}/items/{itemId}`, update
+_Put_, `api/v1/items/{itemId}`, update
 
-_Delete_, `api/v1/topics/{topicId}/votings/{votingId}/items/{itemId}`, delete
+_Delete_, `api/v1/items/{itemId}`, delete
 
-_Delete_, `api/v1/topics/{topicId}/votings/{votingId}/items`, delete all
+_Get_, `api/v1/items`, get all
 
-_Get_, `api/v1/topics/{topicId}/votings/{votingId}/items`, get all
+_Delete_, `api/v1/items`, delete all
+
+_Delete_, `api/v1/topics/{topicId}/votings/{votingId}/items`, delete all by topicId and votingId
+
+_Get_, `api/v1/topics/{topicId}/votings/{votingId}/items`, get all by topicId and votingId
+
+_Post_, `api/v1/topics/{topicId}/votings/{votingId}/items`, create by topicId and votingId
 
 _Post_, `api/v1/topics/{topicId}/votings/{votingId}/items/{itemId}`, vote for item
 
-##### Body example:
+##### Request body example:
 ```
 {
     "name": "item",
